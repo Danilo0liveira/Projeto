@@ -1,12 +1,12 @@
 #include "quarto.h"
 
-Quarto :: Quarto(int andar, int camas, int capacidade, float diaria, int numero, bool situacao){
+Quarto :: Quarto(int andar, int camas, int capacidade, float diaria, int numero){
     this -> andar = andar;
     this -> camas = camas;
     this -> capacidade = capacidade;
     this -> diaria = diaria;
     this -> numero = numero;
-    this -> situacao = situacao;
+    this -> situacao = false;
 }
 
 /*
