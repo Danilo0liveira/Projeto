@@ -29,11 +29,16 @@ void Quarto :: setDiaria(float diaria){
 void Quarto :: setNumero(int numero){
     this -> numero = numero
 }
+*/
 
 void Quarto :: setSituacao(bool situacao){
-    this -> situacao = situacao
+    if (getSituacao())
+    {
+        this->situacao = false;
+        return;
+    }
+    this->situacao = true;
 }
-*/
 
 int Quarto :: getAndar() const{
     return andar;
