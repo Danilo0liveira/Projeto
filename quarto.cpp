@@ -32,12 +32,7 @@ void Quarto :: setNumero(int numero){
 */
 
 void Quarto :: setSituacao(bool situacao){
-    if (getSituacao())
-    {
-        this->situacao = false;
-        return;
-    }
-    this->situacao = true;
+    this->situacao = situacao;
 }
 
 int Quarto :: getAndar() const{
