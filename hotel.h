@@ -8,26 +8,30 @@ class Hotel{
         vector<QuartoPcD> lista_PcD;
         vector<Reserva> lista_reservas;
         int ranking;
-        static int pessoas;
-        static int maxQuartos;
-        static int contador;
+        int andares;
+        int pessoas;
+        int maxQuartos;
+        int contador;
 
     public:
+        Hotel();
         bool addQuarto(Quarto);
         bool addPremium(QuartoPremium);
         bool addPcD(QuartoPcD);
         bool addReserva(Reserva);
-        void cancelaReserva();
-        bool setAndares();
+        bool cancelaReserva(int);
+        void setAndares(int);
         void defRanking();
         void printQuartos() const;
         void printQuarDesocupados() const;
-        void pesquisaQuarto() const;
+        void pesquisaQuarto(int) const;
         int getRanking() const;
         int getAndares() const;
-        static void setMaxQuartos();
-        static int getPessoas();
-        static int getMaxQuartos();
-        static int getContador();
+        void setMaxQuartos(int);
+        void defPessoas();
+        int getPessoas();
+        int getMaxQuartos();
+        int getContador();
+        ~Hotel();
 };
 #endif
