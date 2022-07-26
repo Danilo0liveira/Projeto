@@ -5,8 +5,7 @@ class Quarto{
     private:
         bool situacao;
         float diaria;
-        int andar, camas, capacidade, numero, ranking;
-    
+        int andar, camas, capacidade, numero;
     public:
         Quarto(int, int, int, float, int, bool);
 
@@ -17,7 +16,6 @@ class Quarto{
         void setDiaria(float);
         void setNumero(int);
         void setSituacao(bool);
-        void setRanking(int);
         */
 
         int getAndar() const;
@@ -25,7 +23,6 @@ class Quarto{
         int getCapacidade() const;
         float getDiaria() const;
         int getNumero() const;
-        int getRanking() const;
         bool getSituacao() const;
 };
 
