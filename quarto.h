@@ -7,7 +7,7 @@ class Quarto{
         float diaria;
         int andar, camas, capacidade, numero;
     public:
-        Quarto(int, int, int, float, int, bool);
+        Quarto(int, int, int, float, int);
 
         /*
         void setAndar(int);
