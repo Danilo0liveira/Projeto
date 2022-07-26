@@ -6,7 +6,6 @@ Quarto :: Quarto(int andar, int camas, int capacidade, float diaria, int numero,
     this -> capacidade = capacidade;
     this -> diaria = diaria;
     this -> numero = numero;
-    this -> ranking = ranking;
     this -> situacao = situacao;
 }
 
@@ -29,10 +28,6 @@ void Quarto :: setDiaria(float diaria){
 
 void Quarto :: setNumero(int numero){
     this -> numero = numero
-}
-
-void Quarto :: setRanking(int ranking){
-    this -> ranking = ranking
 }
 
 void Quarto :: setSituacao(bool situacao){
@@ -58,10 +53,6 @@ float Quarto :: getDiaria() const{
 
 int Quarto :: getNumero() const{
     return numero;
-}
-
-int Quarto :: getRanking() const{
-    return ranking;
 }
 
 bool Quarto :: getSituacao() const{
