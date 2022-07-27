@@ -32,6 +32,7 @@ class Hotel{
         int getPessoas();
         int getMaxQuartos();
         int getContador();
+        void gravaListas();
         ~Hotel();
 };
 #endif
