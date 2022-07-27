@@ -1,6 +1,6 @@
 #include "QuartoPcD.h"
 
-QuartoPcD::QuartoPcD(int numQuarto, int andar, int camas, int capacidade, float diaria, bool situacao, string tipoAdaptacao, int servicoEspecial): Quarto(numQuarto, andar, camas, capacidade, diaria, situacao){
+QuartoPcD::QuartoPcD(int numQuarto, int andar, int camas, int capacidade, float diaria, string tipoAdaptacao, int servicoEspecial): Quarto(numQuarto, andar, camas, capacidade, diaria){
     setTipoAdaptacao(tipoAdaptacao);
     setServ(servicoEspecial);
 }
