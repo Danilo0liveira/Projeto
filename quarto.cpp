@@ -6,6 +6,7 @@ Quarto :: Quarto(int andar, int camas, int capacidade, float diaria, int numero)
     this -> capacidade = capacidade;
     this -> diaria = diaria;
     this -> numero = numero;
+    this -> situacao = situacao;
 }
 
 /*
@@ -31,7 +32,7 @@ void Quarto :: setNumero(int numero){
 */
 
 void Quarto :: setSituacao(bool situacao){
-    this->situacao = false;
+    this -> situacao = false;
 }
 
 int Quarto :: getAndar() const{
