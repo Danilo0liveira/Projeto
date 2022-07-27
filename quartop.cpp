@@ -1,7 +1,7 @@
 #include "quartop.h"
 
-Quarto_premium :: Quarto_premium(int andar, int camas, int capacidade, float diaria, int numero, bool situacao) : 
-Quarto(int andar, int camas, int capacidade, float diaria, int numero, bool situacao){
+Quarto_premium :: Quarto_premium(int andar, int camas, int capacidade, float diaria, int numero) : 
+Quarto(int andar, int camas, int capacidade, float diaria, int numero){
     this -> ar_cnd = 0;
     this -> chuv_el = 0;
     this -> servico = 0;
