@@ -9,7 +9,7 @@ class QuartoPcD:public Quarto{
     string tipoAdaptacao;
     int servicoEspecial;
     public:
-        QuartoPcD(int, int, int, int, float, bool, string, int);
+        QuartoPcD(int, int, int, int, float, string, int);
         void setTipoAdaptacao(string);
         void setServ(int);
         string getTipoAdaptacao() const;
