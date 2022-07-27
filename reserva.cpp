@@ -6,8 +6,8 @@ Reserva::Reserva(int& nm_acmp, int& nm_quarto, std::string& nome)
     this->nm_quarto = (nm_quarto < 0) ? 0 : nm_quarto;
     this->nome = nome;
     
-    srand(time(0));
-    this->nm_res = rand();
+//     srand(unsigned time(0)); incluir na main
+    this->nm_res = 66666 + (rand() % 6666) + (rand() % 6666);
 }
 
 int Reserva::get_nmReserva() const
