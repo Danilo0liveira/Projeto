@@ -1,6 +1,7 @@
 #include "hotel.h"
+
 Hotel::Hotel(){
-    int num, andar, camas, capacidade, wifi, chuveiro, arcond, TV, serv, acompanhantes, numReserva;
+    int num, andar, camas, capacidade, wifi, chuveiro, arcond, TV, serv, nm_acmp, nm_res;
     string tipo, nome;
     float diaria;
     bool situacao;
@@ -91,25 +92,26 @@ Hotel::Hotel(){
         arquivo3.close();
     }
 
-    ifstream arquivo4;
-    arquivo4.open("ListaReservas.txt", ios::in);
+    ifstream arquivo4("ListaReservas.txt", ios::in);
 
-    if(arquivo4.is_open()){
-        while(!arquivo4.eof()){
-
-            arquivo4 << numReserva;
-            arquivo4.ignore();
+    if(arquivo4.is_open())
+    {
+        while(!arquivo4.eof())
+        {
             getline(arquivo4, nome);
+
+            if (arquivo4.eof()) break;
+
+            arquivo4 >> nm_res;
+            arquivo4 >> nm_acmp;
+            arquivo4 >> num;
             arquivo4.ignore();
-            arquivo4 << acompanhantes;
-            arquivo4 << num;
 
-            Reserva aux();
+            Reserva reserva(nm_acmp, num, nome);
+            lista_reservas.emplace_back(reserva);
         }
-
         arquivo4.close();
     }
-
 }
 
 bool Hotel::addQuarto(Quarto q){
@@ -475,22 +477,22 @@ void Hotel::gravaListas(){
     else
 		cout<<"Nao foi possivel abrir o arquivo"<<endl;
 
-    ofstream arquivo4;
-    arquivo4.open("ListaReservas.txt", ios::trunc);
+    ofstream arquivo4("ListaReservas.txt", ios::trunc);
 
-    if(arquivo4.is_open()){
-        for(unsigned u; u < lista_reservas.size(); u++){
-            arquivo4 << lista_reservas.[u].get_nmReserva() << endl;
-            arquivo4 << lista_reservas.[u].get_nome() << endl;
-            arquivo4 << lista_reservas.[u].getAcompanhantes() << endl;
-            arquivo4 << lista_reservas.[u].get_nmquarto() << endl;
+    if(arquivo4.is_open())
+    {
+        for (const auto& reserva : lista_reservas)
+        {
+            arquivo << reserva.get_nome() << std::endl;
+            arquivo << reserva.get_nmReserva() << std::endl;
+            arquivo << reserva.get_nmAcmp() << std::endl;
+            arquivo << reserva.get_nmQuarto() << std::endl;
         }
         arquivo4.close();
     }
 
     else
 		cout<<"Nao foi possivel abrir o arquivo"<<endl;
-
 }
 
 Hotel::~Hotel(){
