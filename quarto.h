@@ -3,7 +3,7 @@
 
 class Quarto{
     private:
-        // variavies
+        // atributos
         bool situacao;
         float diaria;
         int andar, camas, capacidade, numero;
