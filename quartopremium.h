@@ -8,11 +8,11 @@ private:
 public:
     QuartoPremium(int numero,int andar,int camas,int capacidade,int diaria);
     // métodos gets
-    int getwifi{} const;
-    int getchuvelet{} const;
-    int getarcond{} const;
-    int gettv{} const;
-    int getservquart{} const;
+    int getwifi() const;
+    int getchuvelet() const;
+    int getarcond() const;
+    int gettv() const;
+    int getservquart() const;
 
 };
 

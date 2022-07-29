@@ -1,7 +1,7 @@
 #include "quartopremium.h" //include do headerfile
 
 //construtor
-QuartoPremium::QuartoPremium{int numero,int andar,int camas,int capacidade,int diaria} : Quarto(numero,andar,camas,capacidade,diaria)
+QuartoPremium::QuartoPremium(int numero,int andar,int camas,int capacidade,int diaria) : Quarto(numero,andar,camas,capacidade,diaria)
 {
     this -> wifi = 0; 
     this -> chuvelet = 0;   
