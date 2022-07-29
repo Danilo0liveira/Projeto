@@ -1,5 +1,6 @@
 #include "hotel.h"
 
+//Construtor que ira ler o arquivo das listas.
 Hotel::Hotel(){
     int num, andar, camas, capacidade, wifi, chuveiro, arcond, TV, serv, nm_acmp, nm_res;
     string tipo, nome;
@@ -114,6 +115,7 @@ Hotel::Hotel(){
     }
 }
 
+//Metodos de adicionar os quartos.
 bool Hotel::addQuarto(Quarto q){
     for(unsigned u = 0; u < lista_quarto.size(); u++)
             if(q.getNumero() == lista_quarto[u].getNumero)
@@ -207,6 +209,7 @@ bool Hotel::addReserva(Reserva r){
 
 }
 
+//Metodo de cancelar os reservas.
 bool Hotel::cancelaReserva(int n){
     for(unsigned u = 0; u < lista_reservas.size(); u++){
         if(n == lista_reservas[u].get_numReserva()){
@@ -233,14 +236,17 @@ bool Hotel::cancelaReserva(int n){
     return false;
 }
 
+//Adicionar valor aos andares do hotel.
 void Hotel::setAndares(int a){
     andares = a;
 }
 
+//Definicao de ranking.
 void Hotel::defRanking(){
 
 }
 
+//Exibir todos os quartos.
 void Hotel::printQuartos(){
     if(contador == 0)
         cout << "Nao ha quartos no hotel!" << endl;
@@ -292,6 +298,7 @@ void Hotel::printQuartos(){
     }
 }
 
+//Exibir apenas os quartos desocupados.
 void Hotel::printQuarDesocupados(){
     if(contador == 0)
         cout << "Nao ha quartos no hotel!" << endl;
@@ -332,6 +339,7 @@ void Hotel::printQuarDesocupados(){
     }
 }
 
+//Pesquisa um dos quartos.
 void Hotel::pesquisaQuarto(int numero){
     for(unsigned u = 0; u < lista_quarto.size(); u++){
         if(numero == lista_quarto[u].getNumero()){
@@ -385,35 +393,43 @@ void Hotel::pesquisaQuarto(int numero){
     }
 }
 
+//Retorna ranking do hotel inteiro.
 int Hotel::getRanking(){
     return ranking;
 }
 
+//Retorna o numero de andares.
 int Hotel::getAndares(){
     return andares;
 }
 
+//Setando o valor maximo de quartos.
 void Hotel::setMaxQuartos(int maximo){
     maxQuartos = maximo;
 }
 
+//Definindo o numero de pessoas no hotel.
 void Hotel::defPessoas(){
     for(unsigned u = 0; u < lista_reservas.size(); u++)
         pessoas = pessoas + lista_reservas[u].getAcompanhantes();
 }
 
+//Retornando o numero de pessoas.
 int Hotel::getPessoas(){
     return pessoas;
 }
 
+//Retornando o numero maximo de quartos.
 int Hotel::getMaxQuartos(){
     return maxQuartos;
 }
 
+//Retornando o numero atual de quartos.
 int getContador(){
     return contador;
 }
 
+//Gravando as listas num arquivo.
 void Hotel::gravaListas(){
 
     ofstream arquivo;
@@ -495,6 +511,7 @@ void Hotel::gravaListas(){
 		cout<<"Nao foi possivel abrir o arquivo"<<endl;
 }
 
+//Destrutor que ira chamar o metodo de gravar.
 Hotel::~Hotel(){
     gravaListas();
 }
