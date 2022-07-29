@@ -1,5 +1,7 @@
+// incluindo a biblioteca
 #include "quarto.h"
 
+// construtor inicializando variáveis
 Quarto :: Quarto(int andar, int camas, int capacidade, float diaria, int numero){
     this -> andar = andar;
     this -> camas = camas;
@@ -9,32 +11,12 @@ Quarto :: Quarto(int andar, int camas, int capacidade, float diaria, int numero)
     this -> situacao = situacao;
 }
 
-/*
-void Quarto :: setAndar(int andar){
-    this -> andar = andar
-}
-
-void Quarto :: setCamas(int camas){
-    this -> camas = camas
-}
-
-void Quarto :: setCapacidade(int capacidade){
-    this -> capacidade = capacidade
-}
-
-void Quarto :: setDiaria(float diaria){
-    this -> diaria = diaria
-}
-
-void Quarto :: setNumero(int numero){
-    this -> numero = numero
-}
-*/
-
+// inicializando a situação como falsa
 void Quarto :: setSituacao(bool situacao){
     this -> situacao = false;
 }
 
+// metodos get 
 int Quarto :: getAndar() const{
     return andar;
 }
