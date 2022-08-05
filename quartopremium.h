@@ -6,13 +6,18 @@ class QuartoPremium : public Quarto
 private:
     int wifi,chuvelet,arcond,tv,servquart;
 public:
-    QuartoPremium(int numero,int andar,int camas,int capacidade,int diaria);
+    QuartoPremium(int andar, int camas, int capacidade, float diaria, int numero);
     // métodos gets
-    int getwifi() const;
-    int getchuvelet() const;
-    int getarcond() const;
-    int gettv() const;
-    int getservquart() const;
+    void setWifi(const int&);
+    void setChuvelet(const int&);
+    void setArcond(const int&);
+    void setTv(const int&);
+    void setServico(const int&);
+    int getWifi() const;
+    int getChuvelet() const;
+    int getArcond() const;
+    int getTv() const;
+    int getServico() const;
 
 };
 

@@ -7,6 +7,7 @@ class Quarto{
         bool situacao;
         float diaria;
         int andar, camas, capacidade, numero;
+        
     public:
         // construtor
         Quarto(int, int, int, float, int);

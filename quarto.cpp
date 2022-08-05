@@ -8,12 +8,13 @@ Quarto :: Quarto(int andar, int camas, int capacidade, float diaria, int numero)
     this -> capacidade = capacidade;
     this -> diaria = diaria;
     this -> numero = numero;
-    this -> situacao = situacao;
+    this -> situacao = false;
 }
 
 // inicializando a situação como falsa
-void Quarto :: setSituacao(bool situacao){
-    this -> situacao = false;
+void Quarto :: setSituacao(bool situacao)
+{
+    this -> situacao = situacao;
 }
 
 // metodos get 

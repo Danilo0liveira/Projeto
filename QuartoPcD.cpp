@@ -1,25 +1,19 @@
 #include "QuartoPcD.h"
 
 //constructor
-QuartoPcD::QuartoPcD(int numQuarto, int andar, int camas, int capacidade, float diaria, string tipoAdaptacao, int servicoEspecial): Quarto(numQuarto, andar, camas, capacidade, diaria){
-    setTipoAdaptacao(tipoAdaptacao);
-    setServ(servicoEspecial);
-}
-
-//métodos set (atributos da classe derivada)
-void QuartoPcD::setTipoAdaptacao(string tipoAdaptacao){
+QuartoPcD::QuartoPcD(int andar, int camas, int capacidade, float diaria, int num, string tipoAdaptacao, int servicoEspecial) : Quarto(andar, camas, capacidade, diaria, num)
+{
     this->tipoAdaptacao = tipoAdaptacao;
-}
-
-void QuartoPcD::setServ(int servicoEspecial){
     this->servicoEspecial = servicoEspecial;
 }
 
 //metodos gets
-string QuartoPcD::getTipoAdaptacao() const{
+string QuartoPcD::getTipoAdaptacao() const
+{
     return tipoAdaptacao;
 }
 
-int QuartoPcD::getServ() const{
+int QuartoPcD::getServ() const
+{
     return servicoEspecial;
 }

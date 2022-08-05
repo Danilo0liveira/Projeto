@@ -12,10 +12,7 @@ private:
     int servicoEspecial;
 public:
 // constructor
-    QuartoPcD(int, int, int, int, float, string, int);
-//  métodos sets
-    void setTipoAdaptacao(string);
-    void setServ(int);
+    QuartoPcD(int, int, int, float, int, string, int);
 //  métodos gets
     string getTipoAdaptacao() const;
     int getServ() const;
