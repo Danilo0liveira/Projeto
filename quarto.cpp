@@ -12,12 +12,11 @@ Quarto :: Quarto(int andar, int camas, int capacidade, float diaria, int numero)
 }
 
 // inicializando a situação como falsa
-void Quarto :: setSituacao(bool situacao)
-{
+void Quarto :: setSituacao(bool situacao){
     this -> situacao = situacao;
 }
 
-// metodos get 
+// metodos get
 int Quarto :: getAndar() const{
     return andar;
 }

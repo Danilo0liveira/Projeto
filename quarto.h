@@ -7,11 +7,11 @@ class Quarto{
         bool situacao;
         float diaria;
         int andar, camas, capacidade, numero;
-        
+
     public:
         // construtor
-        Quarto(int, int, int, float, int);
-        
+        Quarto(int = 0, int = 0, int = 0, float = 0.0, int = 0);
+
         // metodos
         void setSituacao(bool);
         int getAndar() const;
@@ -23,3 +23,4 @@ class Quarto{
 };
 
 #endif
+
