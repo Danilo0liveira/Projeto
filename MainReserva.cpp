@@ -1,10 +1,11 @@
-#include<iostream>
-
+#include <iostream>
+#include <ctime>
 using namespace std;
 
 #include "reserva.cpp"//Inclui-se o arquivo reserva.cpp.
 
 int main(){
+    srand((unsigned) time(0));
     Reserva reservaConstrutor(5, 200, "ANGELO");//Criado o objeto reserva com os construtores setados.
 
     //Imprimido os valores de reserva.
