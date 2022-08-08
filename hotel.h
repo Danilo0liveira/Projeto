@@ -17,6 +17,7 @@ private:
     int maxQuartos;//Numero maximo de quartos no hotel.
     int contador;//Numero atual de quartos no hotel.
     int cont_avaliacoes;
+    vector<int> quartos_andar;//lista para controlar o numero máximo de quartos por andar.
 
 public:
     Hotel();//Construtor que ira ler o arquivo das listas. 
