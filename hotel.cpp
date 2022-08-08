@@ -18,8 +18,10 @@ Hotel::Hotel()
         arquivo_hotel >> this->contador;
         arquivo_hotel >> this->maxQuartos;
         arquivo_hotel >> this->pessoas;
-        arquivo_hotel >> this->andares;
+        arquivo_hotel >> andar;
         arquivo_hotel >> this->ranking;
+	    
+	setAndares(andar);
     }
     else
     {
@@ -179,9 +181,24 @@ bool Hotel::addQuarto(Quarto& q)
 
     if(contador == maxQuartos || q.getAndar() > andares || q.getAndar() < 0)
         return false;
+	
+    else
+    {
+        int maxQuartos_andar;
+
+        if(maxQuartos % andares > 0)
+            maxQuartos_andar = (maxQuartos / andares) + 1;
+
+        else
+            maxQuartos_andar = maxQuartos / andares;
+
+        if(quartos_andar[q.getAndar()] == maxQuartos_andar)
+            return false;
+    }
 
     lista_quarto.emplace_back(q);
     contador++;
+    quartos_andar[q.getAndar()]++;
 
     return true;
 }
@@ -207,8 +224,23 @@ bool Hotel::addPremium(QuartoPremium& q)
     if (contador == maxQuartos || q.getAndar() > andares || q.getAndar() < 0)
         return false;
 
+    else
+    {
+        int maxQuartos_andar;
+
+        if(maxQuartos % andares > 0)
+            maxQuartos_andar = (maxQuartos / andares) + 1;
+
+        else
+            maxQuartos_andar = maxQuartos / andares;
+
+        if(quartos_andar[q.getAndar()] == maxQuartos_andar)
+            return false;
+    }
+	
     lista_premium.emplace_back(q);
     contador++;
+    quartos_andar[q.getAndar()]++;
 
     return true;
 }
@@ -232,10 +264,25 @@ bool Hotel::addPcD(QuartoPcD& q)
 
     if(contador == maxQuartos || q.getAndar() > andares || q.getAndar() < 0)
         return false;
+	
+    else
+    {
+        int maxQuartos_andar;
+
+        if(maxQuartos % andares > 0)
+            maxQuartos_andar = (maxQuartos / andares) + 1;
+
+        else
+            maxQuartos_andar = maxQuartos / andares;
+
+        if(quartos_andar[q.getAndar()] == maxQuartos_andar)
+            return false;
+    }
 
     lista_PcD.emplace_back(q);
     contador++;
-
+    quartos_andar[q.getAndar()]++;
+	
     return true;
 }
 
@@ -359,7 +406,8 @@ bool Hotel::rmv_quarto(const int& num_quarto, int tipo)
         {
             if (num_quarto == lista_quarto[i].getNumero() && !lista_quarto[i].getSituacao())
             {
-                lista_quarto.erase(lista_quarto.begin() + i);
+                quartos_andar[lista_quarto[i]..getAndar()]--;
+		lista_quarto.erase(lista_quarto.begin() + i);
                 --contador;
                 return true;
             }
@@ -371,7 +419,8 @@ bool Hotel::rmv_quarto(const int& num_quarto, int tipo)
         {
             if (num_quarto == lista_premium[i].getNumero() && !lista_premium[i].getSituacao())
             {
-                lista_premium.erase(lista_premium.begin() + i);
+                quartos_andar[lista_premium[i]..getAndar()]--;
+		lista_premium.erase(lista_premium.begin() + i);
                 --contador;
                 return true;
             }
@@ -383,7 +432,8 @@ bool Hotel::rmv_quarto(const int& num_quarto, int tipo)
         {
             if (num_quarto == lista_PcD[i].getNumero() && !lista_PcD[i].getSituacao())
             {
-                lista_PcD.erase(lista_PcD.begin() + i);
+                quartos_andar[lista_PcD[i]..getAndar()]--;
+		lista_PcD.erase(lista_PcD.begin() + i);
                 --contador;
                 return true;
             }
@@ -395,6 +445,8 @@ bool Hotel::rmv_quarto(const int& num_quarto, int tipo)
 // Adicionar valor aos andares do hotel.
 void Hotel::setAndares(int a){
     andares = a;
+	
+    quartos_andar.resize(andares);
 }
 
 // Definicao de ranking.
