@@ -9,9 +9,7 @@ private:
     vector<QuartoPremium> lista_premium; // Lista de quartos premiums.
     vector<QuartoPcD> lista_PcD; // Listas de quartos PcD.
     vector<Reserva> lista_reservas; // Listas de reservas.
-
-    int *array;
-
+    
     //Os atributos utilizados para o quarto.
     float ranking;//Ranking do hotel.
     int andares;//Andares possiveis no hotel.

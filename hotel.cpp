@@ -182,7 +182,6 @@ bool Hotel::addQuarto(Quarto& q)
 
     lista_quarto.emplace_back(q);
     contador++;
-    array[q.getAndar()]++;
 
     return true;
 }
