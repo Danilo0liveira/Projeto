@@ -565,6 +565,8 @@ void Hotel::pesquisaQuarto(int numero) const
 
             else
                 cout << "Situacao: desocupado" << endl << endl;
+	    
+	    return;
         }
     }
 
@@ -583,6 +585,8 @@ void Hotel::pesquisaQuarto(int numero) const
                 cout << "Situacao: ocupado" << endl << endl;
             else
                 cout << "Situacao: desocupado" << endl << endl;
+		
+	    return;
         }
 
     }
@@ -600,12 +604,19 @@ void Hotel::pesquisaQuarto(int numero) const
                 cout << "Situacao: ocupado" << endl << endl;
             else
                 cout << "Situacao: desocupado" << endl << endl;
+		
+	    return;
         }
     }
+	
+    cout << "Quarto nao encontrado!" << endl;
 }
 
 void Hotel::printReservas() const
 {
+    if(lista_reservas.empty())
+        cout << "Lista esta vazia!" << endl;
+	
     for(const auto& res : lista_reservas)
     {
         cout << "Numero da reserva: " << res.get_nmReserva()
