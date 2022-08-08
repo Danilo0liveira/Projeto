@@ -6,6 +6,7 @@ Hotel::Hotel()
     int num, andar, camas, capacidade, wifi, chuveiro, arcond, TV, serv, nm_acmp, nm_res;
     string nome;
     string tipo;
+    string tipo_quarto;
     float diaria = 0.0;
     bool situacao;
     
@@ -77,12 +78,14 @@ Hotel::Hotel()
             arquivo2 >> serv;
 
             QuartoPremium aux(andar, camas, capacidade, diaria, num);
+
             aux.setWifi(wifi);
             aux.setChuvelet(chuveiro);
             aux.setArcond(arcond);
             aux.setTv(TV);
             aux.setServico(serv);
             aux.setSituacao(situacao);
+            
             lista_premium.emplace_back(aux);
         }
         arquivo2.close();
@@ -122,6 +125,9 @@ Hotel::Hotel()
 
     if(arquivo4.is_open())
     {
+        float montante = 0.0;
+        int dias = 0;
+
         while(!arquivo4.eof())
         {
             getline(arquivo4, nome);
@@ -129,12 +135,23 @@ Hotel::Hotel()
             if (arquivo4.eof()) 
                 break;
 
+
             arquivo4 >> nm_res;
             arquivo4 >> nm_acmp;
             arquivo4 >> num;
-            arquivo4.ignore();
 
-            Reserva reserva(nm_acmp, num, nome);
+            arquivo4.ignore();
+            getline(arquivo4, tipo_quarto);
+
+            arquivo4 >> dias;
+            arquivo4 >> montante;
+            arquivo4.ignore();
+            // arquivo4.ignore();
+
+            Reserva reserva(nm_acmp, num, dias, nome, tipo_quarto);
+
+            reserva.set_nmReserva(nm_res);
+            reserva.set_montante(montante);
             lista_reservas.emplace_back(reserva);
         }
         arquivo4.close();
@@ -165,6 +182,7 @@ bool Hotel::addQuarto(Quarto& q)
 
     lista_quarto.emplace_back(q);
     contador++;
+    array[q.getAndar()]++;
 
     return true;
 }
@@ -187,7 +205,7 @@ bool Hotel::addPremium(QuartoPremium& q)
             return false;
     }
 
-    if(contador == maxQuartos || q.getAndar() > andares || q.getAndar() < 0)
+    if (contador == maxQuartos || q.getAndar() > andares || q.getAndar() < 0)
         return false;
 
     lista_premium.emplace_back(q);
@@ -224,43 +242,55 @@ bool Hotel::addPcD(QuartoPcD& q)
 
 bool Hotel::addReserva(Reserva& r)
 {
+    // verificao
     for(unsigned u = 0; u < lista_reservas.size(); u++)
         if(r.get_nmquarto() == lista_reservas[u].get_nmquarto())
             return false;
-            
-    for(unsigned u = 0; u < lista_quarto.size(); u++){
-        if(lista_quarto[u].getNumero() == r.get_nmquarto())
-        {
-            lista_quarto[u].setSituacao(true);
-            lista_reservas.emplace_back(r);
+    
+    // mudando a situação do quarto
+    if(r.get_tipoQuarto() == "Quarto")
+    {
+        for(unsigned u = 0; u < lista_quarto.size(); u++){
+            if(lista_quarto[u].getNumero() == r.get_nmquarto())
+            {
+                lista_quarto[u].setSituacao(true);
+                r.set_montante(r.getdias() * lista_quarto[u].getDiaria());
+                lista_reservas.emplace_back(r);
 
-            this->pessoas += r.get_nmAc();
+                this->pessoas += r.get_nmAc();
 
-            return true;
+                return true;
+            }
         }
     }
+    else if(r.get_tipoQuarto() == "Quarto Premium")
+    {
+        for(unsigned u = 0; u < lista_premium.size(); u++){
+            if(lista_premium[u].getNumero() == r.get_nmquarto())
+            {
+                lista_premium[u].setSituacao(true);
+                r.set_montante(r.getdias() * lista_premium[u].getDiaria());
+                lista_reservas.emplace_back(r);
 
-    for(unsigned u = 0; u < lista_premium.size(); u++){
-        if(lista_premium[u].getNumero() == r.get_nmquarto())
-        {
-            lista_premium[u].setSituacao(true);
-            lista_reservas.emplace_back(r);
+                this->pessoas += r.get_nmAc();
 
-            this->pessoas += r.get_nmAc();
-
-            return true;
+                return true;
+            }
         }
     }
+    else
+    {
+        for(unsigned u = 0; u < lista_PcD.size(); u++){
+            if(lista_PcD[u].getNumero() == r.get_nmquarto())
+            {
+                lista_PcD[u].setSituacao(true);
+                r.set_montante(r.getdias() * lista_premium[u].getDiaria());
+                lista_reservas.emplace_back(r);
 
-    for(unsigned u = 0; u < lista_PcD.size(); u++){
-        if(lista_PcD[u].getNumero() == r.get_nmquarto())
-        {
-            lista_PcD[u].setSituacao(true);
-            lista_reservas.emplace_back(r);
+                this->pessoas += r.get_nmAc();
 
-            this->pessoas += r.get_nmAc();
-
-            return true;
+                return true;
+            }
         }
     }
     return false;
@@ -269,36 +299,52 @@ bool Hotel::addReserva(Reserva& r)
 //informar tipo do quarto ?
 bool Hotel::removerReserva(int numero_res)
 {
-    for (unsigned i = 0; i < lista_reservas.size(); ++i)
+    // otimizar ?
+    for(unsigned i = 0; i < lista_reservas.size(); ++i)
     {
-        if (numero_res == lista_reservas[i].get_nmReserva())
+        if(numero_res == lista_reservas[i].get_nmReserva())
         {
             int numero_quarto = lista_reservas[i].get_nmquarto();
-            lista_reservas.erase(lista_reservas.begin() + i);
+            string tipo_quarto = lista_reservas[i].get_tipoQuarto();
+
             pessoas -= lista_reservas[i].get_nmAc();
 
-            for (unsigned u = 0; u < lista_quarto.size(); ++u)
+            lista_reservas.erase(lista_reservas.begin() + i);
+
+            if (tipo_quarto == "Quarto")
             {
-                if (numero_quarto == lista_quarto[u].getNumero())
+                for (unsigned u = 0; u < lista_quarto.size(); ++u)
                 {
-                    lista_quarto[u].setSituacao(false);
-                    return true;
+                    // std::cout << "$$" << std::endl;
+                    if (numero_quarto == lista_quarto[u].getNumero())
+                    {
+                        lista_quarto[u].setSituacao(false);
+                        return true;
+                    }
                 }
             }
-            for (unsigned u = 0; u < lista_premium.size(); ++u)
+            else if (tipo_quarto == "Quarto Premium")
             {
-                if (numero_quarto == lista_premium[u].getNumero())
+                for (unsigned u = 0; u < lista_premium.size(); ++u)
                 {
-                    lista_premium[u].setSituacao(false);
-                    return true;
+                    // std::cout << "####" << std::endl;
+                    if (numero_quarto == lista_premium[u].getNumero())
+                    {
+                        lista_premium[u].setSituacao(false);
+                        return true;
+                    }
                 }
             }
-            for (unsigned u = 0; u < lista_PcD.size(); ++u)
+            else
             {
-                if (numero_quarto == lista_PcD[u].getNumero())
+                for (unsigned u = 0; u < lista_PcD.size(); ++u)
                 {
-                    lista_PcD[u].setSituacao(false);
-                    return true;
+                    // std::cout << "#$$@" << std::endl;
+                    if (numero_quarto == lista_PcD[u].getNumero())
+                    {
+                        lista_PcD[u].setSituacao(false);
+                        return true;
+                    }
                 }
             }
         }
@@ -315,6 +361,7 @@ bool Hotel::rmv_quarto(const int& num_quarto, int tipo)
             if (num_quarto == lista_quarto[i].getNumero() && !lista_quarto[i].getSituacao())
             {
                 lista_quarto.erase(lista_quarto.begin() + i);
+                --contador;
                 return true;
             }
         }
@@ -346,7 +393,7 @@ bool Hotel::rmv_quarto(const int& num_quarto, int tipo)
     return false;
 }
 
-//Adicionar valor aos andares do hotel.
+// Adicionar valor aos andares do hotel.
 void Hotel::setAndares(int a){
     andares = a;
 }
@@ -358,12 +405,11 @@ void Hotel::defRanking(float valor)
     ++cont_avaliacoes;
 }
 
-//Exibir todos os quartos.
+// Exibir todos os quartos.
 void Hotel::printQuartos() const
 {
     if(contador == 0)
         cout << "Nao ha quartos no hotel!" << endl;
-
     else{
         for(unsigned u = 0; u < lista_quarto.size(); u++){
             cout << "Quartos padroes: "<< endl << "Numero: " << lista_quarto[u].getNumero()
@@ -463,7 +509,7 @@ void Hotel::pesquisaQuarto(int numero) const
             << endl << "Capacidade: " << lista_quarto[u].getCapacidade() << endl << "Diaria: "
             << lista_quarto[u].getDiaria() << endl;
 
-            if(lista_quarto[u].getSituacao() == true)
+            if(lista_quarto[u].getSituacao())
                 cout << "Situacao: ocupado" << endl << endl;
 
             else
@@ -632,10 +678,14 @@ void Hotel::gravaListas(){
     {
         for (const auto& reserva : lista_reservas)
         {
-            arquivo4 << reserva.get_nome() << std::endl;
-            arquivo4 << reserva.get_nmReserva() << std::endl;
-            arquivo4 << reserva.get_nmAc() << std::endl;
-            arquivo4 << reserva.get_nmquarto() << std::endl;
+            arquivo4 << reserva.get_nome() << endl;
+            arquivo4 << reserva.get_nmReserva() << endl;
+            arquivo4 << reserva.get_nmAc() << endl;
+            arquivo4 << reserva.get_nmquarto() << endl;
+            arquivo4 << reserva.get_tipoQuarto() << endl;
+            arquivo4 << reserva.getdias() << endl;
+            arquivo4 << reserva.getmontante() << endl;
+
         }
         arquivo4.close();
     }

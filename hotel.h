@@ -1,25 +1,16 @@
 #ifndef Hotel_H
 #define Hotel_H
 
-
-// using namespace std;
-
-// #include <fstream>
-// #include <iostream>
-// #include <vector>
-// #include "quarto.cpp"
-// #include "quartopremium.cpp"
-// #include "QuartoPcD.cpp"
-// #include "reserva.cpp"
-
 //Criacao da classe hotel, que ira ser o nosso "estoque"
 class Hotel
 {
 private:
-    vector<Quarto> lista_quarto;//Lista de quartos simples.
-    vector<QuartoPremium> lista_premium;//Lista de quartos premiums.
-    vector<QuartoPcD> lista_PcD;//Listas de quartos PcD.
-    vector<Reserva> lista_reservas;//Listas de reservas.
+    vector<Quarto> lista_quarto; // Lista de quartos simples.
+    vector<QuartoPremium> lista_premium; // Lista de quartos premiums.
+    vector<QuartoPcD> lista_PcD; // Listas de quartos PcD.
+    vector<Reserva> lista_reservas; // Listas de reservas.
+
+    int *array;
 
     //Os atributos utilizados para o quarto.
     float ranking;//Ranking do hotel.
