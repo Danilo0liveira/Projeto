@@ -9,7 +9,8 @@ Hotel::Hotel()
     string tipo_quarto;
     float diaria = 0.0;
     bool situacao;
-    
+    int index;
+
     ifstream arquivo_hotel("propHotel.txt", ios::in);
 
     if(arquivo_hotel.is_open())
@@ -19,8 +20,13 @@ Hotel::Hotel()
         arquivo_hotel >> this->pessoas;
         arquivo_hotel >> this->andares;
         arquivo_hotel >> this->ranking;
-	    
+        
+        //rever...
 	    setAndares(andares);
+
+        for(unsigned i = 0; i < andares; i++)
+            arquivo_hotel >> quartos_andar[i];
+        // quartos_andar.erase(quartos_andar.begin() + quartos_andar.size)
     }
     else
     {
@@ -406,8 +412,10 @@ bool Hotel::rmv_quarto(const int& num_quarto, int tipo)
 }
 
 // Adicionar valor aos andares do hotel.
-void Hotel::setAndares(int a){
-    quartos_andar.resize(a);
+void Hotel::setAndares(int a)
+{
+    this->andares = a; //redudntante
+    quartos_andar.resize(andares);
 }
 
 // Definicao de ranking.
@@ -520,14 +528,14 @@ void Hotel::pesquisaQuarto(int numero) const
             << endl << "Andar: " << lista_quarto[u].getAndar() << endl << "Camas: " << lista_quarto[u].getCamas()
             << endl << "Capacidade: " << lista_quarto[u].getCapacidade() << endl << "Diaria: "
             << lista_quarto[u].getDiaria() << endl;
-
+            
             if(lista_quarto[u].getSituacao())
                 cout << "Situacao: ocupado" << endl << endl;
 
             else
                 cout << "Situacao: desocupado" << endl << endl;
 	    
-	    return;
+	        return;
         }
     }
 
@@ -547,7 +555,7 @@ void Hotel::pesquisaQuarto(int numero) const
             else
                 cout << "Situacao: desocupado" << endl << endl;
 		
-	    return;
+	        return;
         }
 
     }
@@ -566,7 +574,7 @@ void Hotel::pesquisaQuarto(int numero) const
             else
                 cout << "Situacao: desocupado" << endl << endl;
 		
-	    return;
+	        return;
         }
     }
 	
@@ -719,6 +727,10 @@ void Hotel::gravaListas(){
         arquivo_hotel << this->pessoas << endl;
         arquivo_hotel << this->andares << endl;
         arquivo_hotel << this->ranking << endl;
+
+        for(const auto& andar : quartos_andar)
+            arquivo_hotel << andar << endl;
+
     }
 }
 
