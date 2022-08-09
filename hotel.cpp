@@ -247,7 +247,11 @@ bool Hotel::addReserva(Reserva& r)
         for(unsigned u = 0; u < lista_quarto.size(); u++){
             if(lista_quarto[u].getNumero() == r.get_nmquarto())
             {
+                if(r.get_nmAc() > lista_quarto[u].getCapacidade())
+                    return false;
+
                 lista_quarto[u].setSituacao(true);
+
                 r.set_montante(r.getdias() * lista_quarto[u].getDiaria());
                 lista_reservas.emplace_back(r);
 
@@ -262,7 +266,11 @@ bool Hotel::addReserva(Reserva& r)
         for(unsigned u = 0; u < lista_premium.size(); u++){
             if(lista_premium[u].getNumero() == r.get_nmquarto())
             {
+                if(r.get_nmAc() > lista_premium[u].getCapacidade())
+                    return false;
+            
                 lista_premium[u].setSituacao(true);
+
                 r.set_montante(r.getdias() * lista_premium[u].getDiaria());
                 lista_reservas.emplace_back(r);
 
@@ -277,7 +285,11 @@ bool Hotel::addReserva(Reserva& r)
         for(unsigned u = 0; u < lista_PcD.size(); u++){
             if(lista_PcD[u].getNumero() == r.get_nmquarto())
             {
+                if(r.get_nmAc() > lista_PcD[u].getCapacidade())
+                    return false;
+
                 lista_PcD[u].setSituacao(true);
+
                 r.set_montante(r.getdias() * lista_premium[u].getDiaria());
                 lista_reservas.emplace_back(r);
 
@@ -289,6 +301,7 @@ bool Hotel::addReserva(Reserva& r)
     }
     return false;
 }
+
 
 //informar tipo do quarto ?
 bool Hotel::removerReserva(int numero_res)
