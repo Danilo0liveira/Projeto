@@ -4,19 +4,37 @@
 class Reserva
 {
 private:
-    int nm_res, nm_acmp, nm_quarto;
-    float custo;
-    string nome;
+    int nm_res, nm_acmp, nm_quarto, dias;
+    string nome, tipo_quarto;
+    float montante;
     //incluir tipo de quarto ?
 
 public:
     // constructor
-    Reserva(int nm_acmp, int nm_quarto, string nome);
+    Reserva(int nm_acmp, int nm_quarto, int dias, string nome, string tipo_quarto);
     //métodos gets
+    void set_nmReserva(int&);
+    
+    void set_montante(float montante)
+    {
+        this->montante = montante;
+    }
+
+    float getmontante() const
+    {
+        return montante;
+    }
+    
+    int getdias() const
+    {
+        return dias;
+    }
+
     int get_nmReserva() const;
     int get_nmAc() const;
     int get_nmquarto() const;
     string get_nome() const;
+    string get_tipoQuarto() const;
 
 };
 
