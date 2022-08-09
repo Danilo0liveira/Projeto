@@ -9,15 +9,14 @@ private:
     vector<QuartoPremium> lista_premium; // Lista de quartos premiums.
     vector<QuartoPcD> lista_PcD; // Listas de quartos PcD.
     vector<Reserva> lista_reservas; // Listas de reservas.
+    vector<int> quartos_andar;//lista para controlar o numero máximo de quartos por andar.
     
     //Os atributos utilizados para o quarto.
-    float ranking;//Ranking do hotel.
-    int andares;//Andares possiveis no hotel.
-    int pessoas;//Numero de pessoas no hotel. //valores devem estar no construtor
-    int maxQuartos;//Numero maximo de quartos no hotel.
-    int contador;//Numero atual de quartos no hotel.
-    int cont_avaliacoes;
-    vector<int> quartos_andar;//lista para controlar o numero máximo de quartos por andar.
+    float ranking;  //Ranking do hotel.
+    int andares;    //Andares possiveis no hotel.
+    int pessoas;    //Numero de pessoas no hotel.
+    int maxQuartos_andares; //Numero maximo de quartos por andares no hotel.
+    int cont_avaliacoes; //Contador de avaliações
 
 public:
     Hotel();//Construtor que ira ler o arquivo das listas. 
@@ -37,9 +36,8 @@ public:
     int getAndares() const;//Retorna o numero de andares.
     int get_contAva() const;
     void setMaxQuartos(int);//Setando o valor maximo de quartos.
-    int getPessoas() const;//Retornando o numero de pessoas.
+    int getPessoas() const;//Retornando o numero de pessoa-s.
     int getMaxQuartos() const;//Retornando o numero maximo de quartos.
-    int getContador() const;//Retornando o numero atual de quartos.
     void gravaListas();//Gravando as listas num arquivo.
     ~Hotel();//Destrutor que ira chamar o metodo de gravar.
 };

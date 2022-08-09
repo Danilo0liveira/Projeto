@@ -15,19 +15,17 @@ Hotel::Hotel()
     if(arquivo_hotel.is_open())
     {
         arquivo_hotel >> this->cont_avaliacoes;
-        arquivo_hotel >> this->contador;
-        arquivo_hotel >> this->maxQuartos;
+        arquivo_hotel >> this->maxQuartos_andares;
         arquivo_hotel >> this->pessoas;
-        arquivo_hotel >> andar;
+        arquivo_hotel >> this->andares;
         arquivo_hotel >> this->ranking;
 	    
-	setAndares(andar);
+	    setAndares(andares);
     }
     else
     {
         this->cont_avaliacoes = 0;
-        this->contador = 0;
-        this->maxQuartos = 0;
+        this->maxQuartos_andares = 0;
         this->pessoas = 0;
         this->andares = 0;
         this->ranking = 0;
@@ -179,25 +177,10 @@ bool Hotel::addQuarto(Quarto& q)
             return false;
     }
 
-    if(contador == maxQuartos || q.getAndar() > andares || q.getAndar() < 0)
+    if(q.getAndar() > andares || q.getAndar() < 0 || quartos_andar[q.getAndar()] == maxQuartos_andares)
         return false;
-	
-    else
-    {
-        int maxQuartos_andar;
-
-        if(maxQuartos % andares > 0)
-            maxQuartos_andar = (maxQuartos / andares) + 1;
-
-        else
-            maxQuartos_andar = maxQuartos / andares;
-
-        if(quartos_andar[q.getAndar()] == maxQuartos_andar)
-            return false;
-    }
 
     lista_quarto.emplace_back(q);
-    contador++;
     quartos_andar[q.getAndar()]++;
 
     return true;
@@ -221,25 +204,10 @@ bool Hotel::addPremium(QuartoPremium& q)
             return false;
     }
 
-    if (contador == maxQuartos || q.getAndar() > andares || q.getAndar() < 0)
+    if(q.getAndar() > andares || q.getAndar() < 0 || quartos_andar[q.getAndar()] == maxQuartos_andares)
         return false;
 
-    else
-    {
-        int maxQuartos_andar;
-
-        if(maxQuartos % andares > 0)
-            maxQuartos_andar = (maxQuartos / andares) + 1;
-
-        else
-            maxQuartos_andar = maxQuartos / andares;
-
-        if(quartos_andar[q.getAndar()] == maxQuartos_andar)
-            return false;
-    }
-	
     lista_premium.emplace_back(q);
-    contador++;
     quartos_andar[q.getAndar()]++;
 
     return true;
@@ -262,28 +230,8 @@ bool Hotel::addPcD(QuartoPcD& q)
             return false;
     }
 
-    if(contador == maxQuartos || q.getAndar() > andares || q.getAndar() < 0)
+    if(q.getAndar() > andares || q.getAndar() < 0 || quartos_andar[q.getAndar()] == maxQuartos_andares)
         return false;
-	
-    else
-    {
-        int maxQuartos_andar;
-
-        if(maxQuartos % andares > 0)
-            maxQuartos_andar = (maxQuartos / andares) + 1;
-
-        else
-            maxQuartos_andar = maxQuartos / andares;
-
-        if(quartos_andar[q.getAndar()] == maxQuartos_andar)
-            return false;
-    }
-
-    lista_PcD.emplace_back(q);
-    contador++;
-    quartos_andar[q.getAndar()]++;
-	
-    return true;
 }
 
 bool Hotel::addReserva(Reserva& r)
@@ -400,15 +348,17 @@ bool Hotel::removerReserva(int numero_res)
 
 bool Hotel::rmv_quarto(const int& num_quarto, int tipo)
 {
+    //dá pra deixar mais claro ainda ?
     if (tipo == 1)
     {
         for (unsigned i = 0; i < lista_quarto.size(); ++i)
         {
             if (num_quarto == lista_quarto[i].getNumero() && !lista_quarto[i].getSituacao())
             {
-                quartos_andar[lista_quarto[i]..getAndar()]--;
-		lista_quarto.erase(lista_quarto.begin() + i);
-                --contador;
+		        lista_quarto.erase(lista_quarto.begin() + i);
+
+                quartos_andar[lista_quarto[i].getAndar()]--;
+
                 return true;
             }
         }
@@ -419,9 +369,9 @@ bool Hotel::rmv_quarto(const int& num_quarto, int tipo)
         {
             if (num_quarto == lista_premium[i].getNumero() && !lista_premium[i].getSituacao())
             {
-                quartos_andar[lista_premium[i]..getAndar()]--;
-		lista_premium.erase(lista_premium.begin() + i);
-                --contador;
+		        lista_premium.erase(lista_premium.begin() + i);
+                quartos_andar[lista_premium[i].getAndar()]--;
+
                 return true;
             }
         }
@@ -432,9 +382,9 @@ bool Hotel::rmv_quarto(const int& num_quarto, int tipo)
         {
             if (num_quarto == lista_PcD[i].getNumero() && !lista_PcD[i].getSituacao())
             {
-                quartos_andar[lista_PcD[i]..getAndar()]--;
-		lista_PcD.erase(lista_PcD.begin() + i);
-                --contador;
+		        lista_PcD.erase(lista_PcD.begin() + i);
+                quartos_andar[lista_PcD[i].getAndar()]--;
+
                 return true;
             }
         }
@@ -444,9 +394,7 @@ bool Hotel::rmv_quarto(const int& num_quarto, int tipo)
 
 // Adicionar valor aos andares do hotel.
 void Hotel::setAndares(int a){
-    andares = a;
-	
-    quartos_andar.resize(andares);
+    quartos_andar.resize(a);
 }
 
 // Definicao de ranking.
@@ -459,7 +407,7 @@ void Hotel::defRanking(float valor)
 // Exibir todos os quartos.
 void Hotel::printQuartos() const
 {
-    if(contador == 0)
+    if(!lista_PcD.empty() && !lista_quarto.empty() && !lista_premium.empty())
         cout << "Nao ha quartos no hotel!" << endl;
     else{
         for(unsigned u = 0; u < lista_quarto.size(); u++){
@@ -508,7 +456,7 @@ void Hotel::printQuartos() const
 //Exibir apenas os quartos desocupados.
 void Hotel::printQuarDesocupados() const
 {
-    if(contador == 0)
+    if(!lista_PcD.empty() && !lista_quarto.empty() && !lista_premium.empty())
         cout << "Nao ha quartos no hotel!" << endl;
 
     else{
@@ -640,7 +588,7 @@ int Hotel::getAndares() const
 
 //Setando o valor maximo de quartos.
 void Hotel::setMaxQuartos(int maximo){
-    maxQuartos = maximo;
+    maxQuartos_andares = maximo;
 }
 
 //Retornando o numero de pessoas.
@@ -652,13 +600,7 @@ int Hotel::getPessoas() const
 //Retornando o numero maximo de quartos.
 int Hotel::getMaxQuartos() const
 {
-    return maxQuartos;
-}
-
-//Retornando o numero atual de quartos.
-int Hotel::getContador() const
-{
-    return contador;
+    return maxQuartos_andares;
 }
 
 int Hotel::get_contAva() const
@@ -759,12 +701,11 @@ void Hotel::gravaListas(){
 
     if(arquivo_hotel.is_open())
     {
-        arquivo_hotel << this->cont_avaliacoes << std::endl;
-        arquivo_hotel << this->contador << std::endl;
-        arquivo_hotel << this->maxQuartos << std::endl;
-        arquivo_hotel << this->pessoas << std::endl;
-        arquivo_hotel << this->andares << std::endl;
-        arquivo_hotel << this->ranking << std::endl;
+        arquivo_hotel << this->cont_avaliacoes << endl;
+        arquivo_hotel << this->maxQuartos_andares << endl;
+        arquivo_hotel << this->pessoas << endl;
+        arquivo_hotel << this->andares << endl;
+        arquivo_hotel << this->ranking << endl;
     }
 }
 
