@@ -14,7 +14,7 @@ public:
     Reserva(int nm_acmp, int nm_quarto, int dias, string nome, string tipo_quarto);
     //métodos gets
     void set_nmReserva(int&);
-    
+
     void set_montante(float montante)
     {
         this->montante = montante;
@@ -24,7 +24,7 @@ public:
     {
         return montante;
     }
-    
+
     int getdias() const
     {
         return dias;

@@ -25,7 +25,7 @@ int Reserva::get_nmReserva() const
     return nm_res;
 }
 
-int Reserva::get_nmAc() const 
+int Reserva::get_nmAc() const
 {
     return nm_acmp;
 }
@@ -35,7 +35,7 @@ int Reserva::get_nmquarto() const
     return nm_quarto;
 }
 
-string Reserva::get_nome() const 
+string Reserva::get_nome() const
 {
     return nome;
 }
