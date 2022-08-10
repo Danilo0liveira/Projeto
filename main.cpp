@@ -1,4 +1,4 @@
-#include <iostream>
+#include <iostream>//Incluindo as bibliotecas na nossa main.
 #include <locale.h>
 #include <ostream>
 #include <string>
@@ -9,27 +9,28 @@
 
 using namespace std;
 
-#include "quarto.cpp"
+#include "quarto.cpp"//Incluindo as classes utilizadas para o programa.
 #include "QuartoPcD.cpp"
 #include "quartopremium.cpp"
 #include "reserva.cpp"
 #include "hotel.cpp"
 
-void menufuncionario();
+void menufuncionario();//Protótipo das funções utilizadas na main.
 void menucliente();
 
 int main()
 {
-    setlocale(LC_ALL, "portuguese");
+    setlocale(LC_ALL, "portuguese");//Para utilizar a linguagem de português.
     Hotel hotel;
 
-    if(!hotel.getAndares())
+    if(!hotel.getAndares())//Verificação inicial se o hotel ja foi criado anteriormente ou não.
     {
-        unsigned andares, maxQuartos_andares;
+        unsigned andares, maxQuartos_andares;//Criadas variáveis para armazenar valores do hotel.
 
         cout << "Primeira vez aqui ?\nDefina as propriedades do hotel" << endl;
         cout << "Defina a quantidade de andares: ";
-
+        
+        //Definindo valores para andares e o numero maximo de quartos por andar.
         while(1)
         {
             cout << "Defina a quantidade de andares: ";
@@ -43,7 +44,7 @@ int main()
         
         while(1)
         {
-            cout << "\nDefina a quantidade máxima por andar: ";
+            cout << "\nDefina a quantidade máxima de quartos por andar: ";
             cin >> maxQuartos_andares;
 
             if(maxQuartos_andares >= 0)
@@ -53,17 +54,17 @@ int main()
         }
 
         hotel.setMaxQuartos(maxQuartos_andares);
-        hotel.setAndares(andares);
+        hotel.setAndares(andares);//Setando os valores adquiridos no hotel.
 
     }
 
-    cout << "\t\tBem-vindo" << endl;
+    cout << "\t\tBem-vindo" << endl;//Inicio em si do programa.
 
     unsigned op;
 
    while(1)
    {
-        cout << "Entrar como:" << endl
+        cout << "Entrar como:" << endl//Login para escolher qual o usuário, funcionário ou cliente?
             << "(1) Funcionário" << endl
             << "(2) Cliente" << endl
             << "(0) Sair" << endl
@@ -82,7 +83,7 @@ int main()
                 {
 
                     string alo;
-                    cout << "Insira a senha: " << endl;
+                    cout << "Insira a senha: " << endl;//Verificação da senha.
                     cin.sync();
                     cin >> alo;
 
@@ -96,14 +97,14 @@ int main()
 
                             unsigned op;
 
-                            menufuncionario();
+                            menufuncionario();//Chamamento da funcao menu funcionário com suas opções.
                             cin >> op;
 
                             switch(op)
                             {
-                                case 0:
+                                case 0://Realiza a saida do programa.
                                     return 0;
-                                case 1:
+                                case 1://Adiciona quartos no hotel.
                                 {
                                     unsigned op = 0;
 
@@ -123,7 +124,7 @@ int main()
                                     int andar, numero, camas, capacidade;
                                     float diaria;
 
-                                    while(1)
+                                    while(1)//Recebendo variáveis comuns aos tres tipos de quartos.
                                     {
                                         cout << "Digite o andar: ";
                                         cin >> andar;
@@ -148,7 +149,7 @@ int main()
 
                                     switch(op)
                                     {
-                                        case 1:
+                                        case 1://Adicionando quarto simples.
                                         {
                                             Quarto quarto(andar, camas, capacidade, diaria, numero);
                                             if(!hotel.addQuarto(quarto))
@@ -161,7 +162,7 @@ int main()
 
                                             break;
                                         }
-                                        case 2:
+                                        case 2://Adicionando quarto premium.
                                         {
                                             int wifi, chuv, arcond, TV, servico;
 
@@ -204,7 +205,7 @@ int main()
 
                                             break;
                                         }
-                                        case 3:
+                                        case 3://Adicionando o quarto PcD.
                                         {
                                             int qnt;
                                             string tipo;
@@ -238,7 +239,7 @@ int main()
                                     }
                                     break;
                                 }
-                                case 2:
+                                case 2://Remoção de quartos.
                                 {
                                     int tipo, numero;
 
@@ -267,7 +268,7 @@ int main()
                                     cout << "Sucesso!" << endl;
                                     break;
                                 }
-                                case 3:
+                                case 3://Removendo uma das reservas.
                                 {
                                     int numero;
 
@@ -283,17 +284,17 @@ int main()
                                     cout << "Sucesso!" << endl;
                                     break;
                                 }
-                                case 4:
+                                case 4://Exibindo todos os quartos.
                                 {
                                     hotel.printQuartos();
                                     break;
                                 }
-                                case 5:
+                                case 5://Exibindo todas as reservas.
                                 {
                                     hotel.printReservas();
                                     break;
                                 }
-                                case 6:
+                                case 6://Pesquisando um quarto.
                                 {
                                     int numero;
 
@@ -447,7 +448,7 @@ int main()
     return 0;
 }
 
-void menufuncionario()
+void menufuncionario()//Funções que armazenam os menus cliente e funcionário.
 {
     cout << "Menu funcionario" << endl
         << "(1) Adicionar quarto" << endl
