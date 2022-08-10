@@ -11,7 +11,13 @@ Reserva::Reserva(int nm_acmp, int nm_quarto, int dias, string nome, string tipo_
 
     //incluir na main
     //gera número aleatório para a reserva
-    this->nm_res = 66666 + (rand() % 6666) + (rand() % 6666);
+    this->nm_res = 0;
+    // this->nm_res = 66666 + (rand() % 6666) + (rand() % 6666);
+}
+
+void Reserva::set_montante(float montante)
+{
+    this->montante = montante;
 }
 
 void Reserva::set_nmReserva(int& nm_res)
@@ -20,12 +26,23 @@ void Reserva::set_nmReserva(int& nm_res)
 }
 
 //definição dos métodos gets
+
+float Reserva::getmontante() const
+{
+    return montante;
+}
+
+int Reserva::getdias() const
+{
+    return dias;
+}
+
 int Reserva::get_nmReserva() const
 {
     return nm_res;
 }
 
-int Reserva::get_nmAc() const
+int Reserva::get_nmAc() const 
 {
     return nm_acmp;
 }
@@ -35,7 +52,7 @@ int Reserva::get_nmquarto() const
     return nm_quarto;
 }
 
-string Reserva::get_nome() const
+string Reserva::get_nome() const 
 {
     return nome;
 }

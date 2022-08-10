@@ -14,22 +14,9 @@ public:
     Reserva(int nm_acmp, int nm_quarto, int dias, string nome, string tipo_quarto);
     //métodos gets
     void set_nmReserva(int&);
-
-    void set_montante(float montante)
-    {
-        this->montante = montante;
-    }
-
-    float getmontante() const
-    {
-        return montante;
-    }
-
-    int getdias() const
-    {
-        return dias;
-    }
-
+    void set_montante(float montante);
+    float getmontante() const;
+    int getdias() const;
     int get_nmReserva() const;
     int get_nmAc() const;
     int get_nmquarto() const;
