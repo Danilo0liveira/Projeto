@@ -5,9 +5,9 @@
 #include <vector>
 #include <fstream>
 #include <ctime>
-#include <iomanip>
 #include <clocale>
 #include <sstream>
+#include <cstdlib>
 
 using namespace std;
 
@@ -39,22 +39,15 @@ int main()
             cout << "Defina a quantidade de andares: ";
             cin >> andares;
 
-            if(andares >= 0)
-                break;
-
-            cout << "Numero inválido" << endl;
-        }
-        
-        while(1)
-        {
-            cout << "\nDefina a quantidade máxima por andar: ";
+            cout << "Defina a quantidade máxima de quartos por andar: ";
             cin >> maxQuartos_andares;
 
-            if(maxQuartos_andares >= 0)
+            if(andares > 0 && maxQuartos_andares > 0)
                 break;
-
-            cout << "Numero inválido" << endl;
+            
+            cout << "Dado(s) inválido(s), informe novamente!" << endl;
         }
+        system("cls");
 
         hotel.setMaxQuartos(maxQuartos_andares);
         hotel.setAndares(andares);
@@ -62,7 +55,7 @@ int main()
     }
 
     stringstream strstream;
-    
+
     if(!hotel.get_contAva())
         strstream << "sem availações";
     else
@@ -72,7 +65,12 @@ int main()
     cout << setfill('=') << setw(41) << "=" << endl;
     cout << setfill(' ') << setw(16) << " " << "Bem-vindo" << endl;
     cout << setfill(' ') << setw(14) << " " << "Hotel OgaVirt" << endl;
-    cout << setfill(' ') << setw(13) << " " << "Avaliação: " << strstream.str() << endl;
+
+    (strstream.str().size() > 10) ? 
+    cout << setfill(' ') << setw(6) << " " << "Avaliação: " << strstream.str() << endl 
+    :
+    cout << setfill(' ') << setw(12) << " " << "Avaliação:  " << strstream.str() << endl;
+    
     cout << setfill('=') << setw(41) << "=" << endl;
 
     unsigned op;
@@ -103,13 +101,12 @@ int main()
                     cin >> alo;
 
                     if(alo != "admin")
-                        cout << "Senha incorreta\n" << endl;
-
+                        cout << "Senha incorreta!\n" << endl;
                     else
                     {
                         while(1)
                         {
-
+                            system("cls");
                             unsigned op;
 
                             menufuncionario();
@@ -122,11 +119,13 @@ int main()
                                 case 1:
                                 {
                                     unsigned op = 0;
-                                    
-                                    cout << "Escolha um tipo de quarto para adicionar:" << endl;
-                                    menuquartos();
 
+                                    system("cls");
+
+                                    cout << "Escolha um tipo de quarto para adicionar" << endl;
+                                    menuquartos();
                                     cin >> op;
+                                    cout << setfill('-') << setw(41) << "-" << endl; 
 
                                     if(op < 1 || op > 3)
                                     {
@@ -156,10 +155,9 @@ int main()
 
                                         if(andar > 0 && numero > 0 && capacidade > 0 && camas > 0 && diaria > 0)
                                             break;
-
+                                        
                                         cout << "Dado(s) inválido(s), informe novamente!" << endl;
                                     }
-
                                     switch(op)
                                     {
                                         case 1:
@@ -170,9 +168,7 @@ int main()
                                                 cout << "Nao foi possivel adicionar o quarto" << endl;
                                                 break;
                                             }
-
                                             cout << "Sucesso!" << endl;
-
                                             break;
                                         }
                                         case 2:
@@ -213,7 +209,6 @@ int main()
                                                 cout << "Nao foi possivel adicionar o quarto" << endl;
                                                 break;
                                             }
-
                                             cout << "Sucesso!" << endl;
 
                                             break;
@@ -256,10 +251,10 @@ int main()
                                 {
                                     int tipo, numero;
 
-                                    cout << "Digite o número do quarto: ";
-                                    cin >> numero;
+                                    system("cls");
 
-                                    cout << "Digite o tipo do quarto a ser removido: " << endl;
+                                    cout << "Removendo quarto" << endl;
+                                    cout << "Digite o tipo do quarto a ser removido" << endl;
                                     menuquartos();
                                     cin >> tipo;
 
@@ -269,13 +264,15 @@ int main()
                                         break;
                                     }
 
+                                    cout << "\nDigite o número do quarto: ";
+                                    cin >> numero;
+
 
                                     if (!hotel.rmv_quarto(numero, tipo))
                                     {
                                         cout << "Não foi possível encontrar o quarto!" << endl;
                                         break;
                                     }
-
                                     cout << "Sucesso!" << endl;
                                     break;
                                 }
@@ -283,6 +280,10 @@ int main()
                                 {
                                     int numero;
 
+                                    system("cls");
+
+                                    cout << "Removendo reserva" << endl;
+                                    cout << setfill('-') << setw(41) << "-" << endl;
                                     cout << "Informe o número da reserva: " << endl;
                                     cin >> numero;
 
@@ -297,6 +298,7 @@ int main()
                                 }
                                 case 4:
                                 {
+                                    system("cls");
                                     hotel.printQuartos();
                                     break;
                                 }
@@ -309,6 +311,10 @@ int main()
                                 {
                                     int numero;
 
+                                    system("cls");
+
+                                    cout << "Pesquisando quarto" << endl;
+                                    cout << setfill('-') << setw(41) << "-" << endl;
                                     cout << "Digite o numero do quarto a ser pesquisado: ";
                                     cin >> numero;
 
@@ -318,6 +324,7 @@ int main()
                                 default:
                                     cout << "Opção inválida" << endl;
                             }
+                            system("pause");
                         }
                     }
                 }
@@ -481,15 +488,18 @@ int main()
 
 void menufuncionario()
 {
-    cout << "Menu funcionario" << endl
-        << "(1) Adicionar quarto" << endl
-        << "(2) Remover quarto" << endl
-        << "(3) Remover reserva" << endl
-        << "(4) Printar lista de quartos" << endl
-        << "(5) Printar lista de reservas" << endl
-        << "(6) Pesquisar quarto" << endl
-        << "(0) Finalizar" << endl
-        << ">> ";
+    cout << setfill('=') << setw(41) << "=" << endl;
+    cout << setfill(' ') << setw(12) << " " << "Menu funcionário" << endl;
+    cout << setfill('=') << setw(41) << "=" << endl;
+    cout << "(1) Adicionar quarto" << endl
+         << "(2) Remover quarto" << endl
+         << "(3) Remover reserva" << endl
+         << "(4) Printar lista de quartos" << endl
+         << "(5) Printar lista de reservas" << endl
+         << "(6) Pesquisar quarto" << endl
+         << "(0) Finalizar" << endl
+         << ">> ";
+        //             Menu funcionÃ¡rio
 }
 
 void menucliente()
@@ -506,6 +516,7 @@ void menucliente()
 
 void menuquartos()
 {
+    cout << setfill('-') << setw(41) << "-" << endl; 
     cout << "(1) Quarto Padrão" << endl
          << "(2) Quarto Premium" << endl
          << "(3) Quarto PcD" << endl
