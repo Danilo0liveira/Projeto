@@ -20,7 +20,7 @@ Hotel::Hotel()
         arquivo_hotel >> this->pessoas;
         arquivo_hotel >> this->andares;
         arquivo_hotel >> this->ranking;
-
+        
         //rever...
 	    setAndares(andares);
 
@@ -91,7 +91,7 @@ Hotel::Hotel()
             aux.setTv(TV);
             aux.setServico(serv);
             aux.setSituacao(situacao);
-
+            
             lista_premium.emplace_back(aux);
         }
         arquivo2.close();
@@ -138,7 +138,7 @@ Hotel::Hotel()
         {
             getline(arquivo4, nome);
 
-            if (arquivo4.eof())
+            if (arquivo4.eof()) 
                 break;
 
 
@@ -251,6 +251,18 @@ bool Hotel::addReserva(Reserva& r)
     for(unsigned u = 0; u < lista_reservas.size(); u++)
         if(r.get_nmquarto() == lista_reservas[u].get_nmquarto())
             return false;
+    
+    int nm_res = 66666 + (rand() % 6666) + (rand() % 6666);
+
+    for(const auto& reserva : lista_reservas)
+    {
+        if (nm_res == reserva.get_nmReserva())
+        {
+            while(nm_res == reserva.get_nmReserva())
+                nm_res = 66666 + (rand() % 6666) + (rand() % 6666);
+        }
+    }
+    r.set_nmReserva(nm_res);
 
     // mudando a situação do quarto
     if(r.get_tipoQuarto() == "Quarto")
@@ -279,7 +291,7 @@ bool Hotel::addReserva(Reserva& r)
             {
                 if(r.get_nmAc() > lista_premium[u].getCapacidade())
                     return false;
-
+            
                 lista_premium[u].setSituacao(true);
 
                 r.set_montante(r.getdias() * lista_premium[u].getDiaria());
@@ -435,11 +447,12 @@ void Hotel::printQuartos() const
 {
     if(lista_PcD.empty() && lista_quarto.empty() && lista_premium.empty())
         cout << "Nao ha quartos no hotel!" << endl;
-    else{
+    else
+    {
         for(unsigned u = 0; u < lista_quarto.size(); u++){
             cout << "Quartos padroes: "<< endl << "Numero: " << lista_quarto[u].getNumero()
             << endl << "Andar: " << lista_quarto[u].getAndar() << endl << "Camas: " << lista_quarto[u].getCamas()
-            << endl << "Capacidade: " << lista_quarto[u].getCapacidade() << endl << "Diaria: "
+            << endl << "Capacidade: " << lista_quarto[u].getCapacidade() << endl << "Diaria: R$"
             << lista_quarto[u].getDiaria() << endl;
 
             if(lista_quarto[u].getSituacao())
@@ -451,7 +464,7 @@ void Hotel::printQuartos() const
         for(unsigned u = 0; u < lista_premium.size(); u++){
             cout << "Quartos premium: "<< endl << "Numero: " << lista_premium[u].getNumero()
             << endl << "Andar: " << lista_premium[u].getAndar() << endl << "Camas: " << lista_premium[u].getCamas()
-            << endl << "Capacidade: " << lista_premium[u].getCapacidade() << endl << "Diaria: "
+            << endl << "Capacidade: " << lista_premium[u].getCapacidade() << endl << "Diaria: R$"
             << lista_premium[u].getDiaria() << endl << "Wifi: " << lista_premium[u].getWifi() << " mbps" << endl
             << "Chuveiro Eletricos: " << lista_premium[u].getChuvelet() << " chuveiros" << endl
             << "Ar Condicionado: " << lista_premium[u].getArcond() << " BTUs" << endl << "TV: "
@@ -467,7 +480,7 @@ void Hotel::printQuartos() const
         for(unsigned u = 0; u < lista_PcD.size(); u++){
             cout << "Quartos PcD: "<< endl << "Numero: " << lista_PcD[u].getNumero()
             << endl << "Andar: " << lista_PcD[u].getAndar() << endl << "Camas: " << lista_PcD[u].getCamas()
-            << endl << "Capacidade: " << lista_PcD[u].getCapacidade() << endl << "Diaria: "
+            << endl << "Capacidade: " << lista_PcD[u].getCapacidade() << endl << "Diaria: R$"
             << lista_PcD[u].getDiaria() << endl << "Tipo adaptacao: " << lista_PcD[u].getTipoAdaptacao() << endl
             << "Servicos especiais: " << lista_PcD[u].getServ() << " funcionarios" << endl;
 
@@ -479,20 +492,21 @@ void Hotel::printQuartos() const
     }
 }
 
-//Exibir apenas os quartos desocupados. usado p cliente
+//Exibir apenas os quartos desocupados.
 void Hotel::printQuarDesocupados() const
 {
     if(lista_PcD.empty() && lista_quarto.empty() && lista_premium.empty())
-        cout << "Nao ha quartos no hotel!" << endl;
-
-    else{
-
+        cout << "Não há quartos no hotel!" << endl;
+    else if(lista_PcD.size() + lista_quarto.size() + lista_premium.size() == lista_reservas.size())
+        cout << "Não há quartos disponíveis" << endl;
+    else
+    {
         for(unsigned u = 0; u < lista_quarto.size(); u++){
             if(!lista_quarto[u].getSituacao())
             {
                 cout << "Quartos padroes: "<< endl << "Numero: " << lista_quarto[u].getNumero()
                 << endl << "Andar: " << lista_quarto[u].getAndar() << endl << "Camas: " << lista_quarto[u].getCamas()
-                << endl << "Capacidade: " << lista_quarto[u].getCapacidade() << endl << "Diaria: "
+                << endl << "Capacidade: " << lista_quarto[u].getCapacidade() << endl << "Diaria: R$"
                 << lista_quarto[u].getDiaria() << endl << endl;
             }
         }
@@ -502,7 +516,7 @@ void Hotel::printQuarDesocupados() const
             {
                 cout << "Quartos premium: "<< endl << "Numero: " << lista_premium[u].getNumero()
                 << endl << "Andar: " << lista_premium[u].getAndar() << endl << "Camas: " << lista_premium[u].getCamas()
-                << endl << "Capacidade: " << lista_premium[u].getCapacidade() << endl << "Diaria: "
+                << endl << "Capacidade: " << lista_premium[u].getCapacidade() << endl << "Diaria: R$"
                 << lista_premium[u].getDiaria() << endl << "Wifi: " << lista_premium[u].getWifi() << " mbps" << endl
                 << "Chuveiro Eletricos: " << lista_premium[u].getChuvelet() << " chuveiros" << endl
                 << "Ar Condicionado: " << lista_premium[u].getArcond() << " BTUs" << endl << "TV: "
@@ -510,13 +524,12 @@ void Hotel::printQuarDesocupados() const
                 << lista_premium[u].getServico() << " funcionarios" << endl;
             }
         }
-
         for(unsigned u = 0; u < lista_PcD.size(); u++){
             if(!lista_PcD[u].getSituacao())
             {
                 cout << "Quartos PCD: "<< endl << "Numero: " << lista_PcD[u].getNumero()
                 << endl << "Andar: " << lista_PcD[u].getAndar() << endl << "Camas: " << lista_PcD[u].getCamas()
-                << endl << "Capacidade: " << lista_PcD[u].getCapacidade() << endl << "Diaria: "
+                << endl << "Capacidade: " << lista_PcD[u].getCapacidade() << endl << "Diaria: R$"
                 << lista_PcD[u].getDiaria() << endl << "Tipo adaptacao: " << lista_PcD[u].getTipoAdaptacao() << endl
                 << "Servicos especiais: " << lista_PcD[u].getServ() << " funcionarios" << endl;
             }
@@ -529,9 +542,9 @@ void Hotel::pesquisaQuarto(int numero) const
 {
     for(unsigned u = 0; u < lista_quarto.size(); u++){
         if(numero == lista_quarto[u].getNumero()){
-            cout << endl << "Numero: " << lista_quarto[u].getNumero()
+            cout << "Numero: " << lista_quarto[u].getNumero()
             << endl << "Andar: " << lista_quarto[u].getAndar() << endl << "Camas: " << lista_quarto[u].getCamas()
-            << endl << "Capacidade: " << lista_quarto[u].getCapacidade() << endl << "Diaria: "
+            << endl << "Capacidade: " << lista_quarto[u].getCapacidade() << endl << "Diaria: R$"
             << lista_quarto[u].getDiaria() << endl;
 
             if(lista_quarto[u].getSituacao())
@@ -539,16 +552,16 @@ void Hotel::pesquisaQuarto(int numero) const
 
             else
                 cout << "Situacao: desocupado" << endl << endl;
-
+	    
 	        return;
         }
     }
 
     for(unsigned u = 0; u < lista_premium.size(); u++){
         if(numero == lista_premium[u].getNumero()){
-            cout << endl << "Numero: " << lista_premium[u].getNumero()
+            cout << "Numero: " << lista_premium[u].getNumero()
             << endl << "Andar: " << lista_premium[u].getAndar() << endl << "Camas: " << lista_premium[u].getCamas()
-            << endl << "Capacidade: " << lista_premium[u].getCapacidade() << endl << "Diaria: "
+            << endl << "Capacidade: " << lista_premium[u].getCapacidade() << endl << "Diaria: R$"
             << lista_premium[u].getDiaria() << endl << "Wifi: " << lista_premium[u].getWifi() << " mbps" << endl
             << "Chuveiro Eletricos: " << lista_premium[u].getChuvelet() << " chuveiros" << endl
             << "Ar Condicionado: " << lista_premium[u].getArcond() << " BTUs" << endl << "TV: "
@@ -559,7 +572,7 @@ void Hotel::pesquisaQuarto(int numero) const
                 cout << "Situacao: ocupado" << endl << endl;
             else
                 cout << "Situacao: desocupado" << endl << endl;
-
+		
 	        return;
         }
 
@@ -568,9 +581,9 @@ void Hotel::pesquisaQuarto(int numero) const
     for(unsigned u = 0; u < lista_PcD.size(); u++){
         if(numero == lista_PcD[u].getNumero())
         {
-            cout << endl <<"Quartos padroes: "<< endl << "Numero: " << lista_PcD[u].getNumero()
+            cout << "Quartos padroes: "<< endl << "Numero: " << lista_PcD[u].getNumero()
             << endl << "Andar: " << lista_PcD[u].getAndar() << endl << "Camas: " << lista_PcD[u].getCamas()
-            << endl << "Capacidade: " << lista_PcD[u].getCapacidade() << endl << "Diaria: "
+            << endl << "Capacidade: " << lista_PcD[u].getCapacidade() << endl << "Diaria: R$"
             << lista_PcD[u].getDiaria() << endl << "Tipo adaptacao: " << lista_PcD[u].getTipoAdaptacao() << endl
             << "Servicos especiais: " << lista_PcD[u].getServ() << " funcionarios" << endl;
 
@@ -578,11 +591,11 @@ void Hotel::pesquisaQuarto(int numero) const
                 cout << "Situacao: ocupado" << endl << endl;
             else
                 cout << "Situacao: desocupado" << endl << endl;
-
+		
 	        return;
         }
     }
-
+	
     cout << "Quarto nao encontrado!" << endl;
 }
 
@@ -590,7 +603,7 @@ void Hotel::printReservas() const
 {
     if(lista_reservas.empty())
         cout << "Lista esta vazia!" << endl;
-
+	
     for(const auto& res : lista_reservas)
     {
         cout << "Numero da reserva: " << res.get_nmReserva()
@@ -682,7 +695,7 @@ void Hotel::gravaListas(){
 
     ofstream arquivo3("ListaQuartosPcD.txt", ios::trunc);
     // arquivo3.open("ListaQuartosPcD.txt", ios::trunc);
-
+    
     if(arquivo3.is_open())
     {
         for(unsigned u = 0; u < lista_PcD.size(); u++)
