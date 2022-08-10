@@ -479,7 +479,7 @@ void Hotel::printQuartos() const
     }
 }
 
-//Exibir apenas os quartos desocupados.
+//Exibir apenas os quartos desocupados. usado p cliente
 void Hotel::printQuarDesocupados() const
 {
     if(lista_PcD.empty() && lista_quarto.empty() && lista_premium.empty())
@@ -555,7 +555,7 @@ void Hotel::pesquisaQuarto(int numero) const
             << lista_premium[u].getTv() << " polegadas" << endl << "Servico de quarto: "
             << lista_premium[u].getServico() << " funcionarios" << endl;
 
-            if(lista_PcD[u].getSituacao())
+            if(lista_premium[u].getSituacao())
                 cout << "Situacao: ocupado" << endl << endl;
             else
                 cout << "Situacao: desocupado" << endl << endl;

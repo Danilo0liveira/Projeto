@@ -428,6 +428,8 @@ int main()
                         break;
                     }
                     default:
+                    cout << "Opcao incorreta" << endl
+                        << "Informe novamente" << endl;
                         break;
                     }
                 }
