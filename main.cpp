@@ -1,12 +1,13 @@
 #include <iostream>
-#include <locale.h>
+#include <iomanip>
 #include <ostream>
-#include <stdlib.h>
 #include <string>
 #include <vector>
 #include <fstream>
 #include <ctime>
-// #include <clocale>
+#include <iomanip>
+#include <clocale>
+#include <sstream>
 
 using namespace std;
 
@@ -60,11 +61,19 @@ int main()
 
     }
 
-    cout << "==================";
-    cout << "=======================" << endl;
-    cout << "\t\tBem-vindo" << endl;
-    cout << "=================";
-    cout << "========================" << endl;
+    stringstream strstream;
+    
+    if(!hotel.get_contAva())
+        strstream << "sem availações";
+    else
+        strstream << hotel.getRanking() / hotel.get_contAva();
+                                
+    // 7
+    cout << setfill('=') << setw(41) << "=" << endl;
+    cout << setfill(' ') << setw(16) << " " << "Bem-vindo" << endl;
+    cout << setfill(' ') << setw(14) << " " << "Hotel OgaVirt" << endl;
+    cout << setfill(' ') << setw(13) << " " << "Avaliação: " << strstream.str() << endl;
+    cout << setfill('=') << setw(41) << "=" << endl;
 
     unsigned op;
 
@@ -113,13 +122,7 @@ int main()
                                 case 1:
                                 {
                                     unsigned op = 0;
-
-                                    // cout << "Escolha uma opcao" << endl
-                                    //     << "(1) adicionar quarto padrão" << endl
-                                    //     << "(2) adicionar quarto premium" << endl
-                                    //     << "(3) adicionar quarto PcD" << endl
-                                    //     << ">> ";
-
+                                    
                                     cout << "Escolha um tipo de quarto para adicionar:" << endl;
                                     menuquartos();
 
@@ -258,9 +261,6 @@ int main()
 
                                     cout << "Digite o tipo do quarto a ser removido: " << endl;
                                     menuquartos();
-                                        // << "(1) remover quarto padrão" << endl
-                                        // << "(2) remover quarto premium" << endl
-                                        // << "(3) remover quarto pcd" << endl;
                                     cin >> tipo;
 
                                     if(tipo < 1 || tipo > 3)
@@ -388,7 +388,9 @@ int main()
                         // adiciona a reserva ao hotel
                         if(hotel.addReserva(reserva)){
                             cout << "Reserva feita com sucesso!" << endl
-                                << "O número da sua reserva é " << reserva.get_nmReserva() << endl ;
+                                << setfill('-') << setw(41) << "-" << endl
+                                << "O número da sua reserva é " << reserva.get_nmReserva() << endl
+                                << "Montante a ser pago: R$ " << reserva.getmontante() << endl;
                             break;
                         }
                         cout << "Reserva não realizada." << endl;
