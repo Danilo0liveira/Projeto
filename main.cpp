@@ -40,7 +40,7 @@ int main()
 
             cout << "Numero inválido" << endl;
         }
-
+        
         while(1)
         {
             cout << "\nDefina a quantidade máxima por andar: ";
@@ -75,6 +75,7 @@ int main()
             case 0:
                 return 0;
 
+            // menu funcionário
             case 1:
             {
                 while(1)
@@ -310,10 +311,127 @@ int main()
                 }
                 break;
             }
+            // menu cliente
             case 2:
             {
-                cout << "cliente";
-                menucliente();
+
+                while (1)
+                {
+                    unsigned op;
+
+                    menucliente();
+
+                    cin >> op;
+
+                    switch (op)
+                    {
+                    case 0:
+                        return 0;
+
+                    case 1: // Fazer reserva
+                    {
+                        // cria e pega o valor de variáveis p/ reserva
+                        int acompanhantes, num_quarto, dias;
+                        string nome, tipo_quarto;
+                        
+                        cout << "Digite o número de acompanhantes: ";
+                        cin >> acompanhantes;
+                        
+                        cout << "Digite o número do quarto: ";
+                        cin >> num_quarto;
+                        
+                        cout << "Digite o número de dias: ";
+                        cin >> dias;
+                        
+                        cout << "Digite o seu nome: ";
+                        getline(cin >> ws, nome);
+                        
+                        cout << "Digite o tipo de quarto: ";
+                        getline(cin >> ws, tipo_quarto);
+
+                        // cria o objeto Reserva
+                        Reserva reserva(acompanhantes, num_quarto, dias, nome, tipo_quarto);
+
+                        // adiciona a reserva ao hotel
+                        if(hotel.addReserva(reserva)){
+                            cout << "Reserva feita com sucesso!" << endl
+                                << "O número da sua reserva é " << reserva.get_nmReserva() << endl ;
+                            break;
+                        }
+                        cout << "Reserva não realizada." << endl;
+                        break;
+                    }
+                    case 2: // Check out 
+                    {
+                        int num_quarto;
+                        float avaliacao = -1; // inicializando avaliacao
+
+                        // Pega o número do quarto
+                        cout << "Digite o número da reserva: " << endl;
+                        cin >> num_quarto;
+
+                        // Remove a reserva, se encontrada no sistema
+                        if(!hotel.removerReserva(num_quarto))
+                        {
+                            cout << "A reserva não foi encontrada." << endl;
+                            break;
+                        }
+
+                        // Avaliação do hotel pelo cliente
+                        cout << "Antes de ir, poderia deixar uma avaliação de 0 a 5 para o hotel?" << endl
+                            << "Sendo 0 - Muito Ruim e 5 - Muito bom " << endl;
+                            
+                            while ((avaliacao < 0 || avaliacao > 5))
+                            {
+                            cout << ">> ";
+                            cin >> avaliacao;
+                            }
+
+                        // Altera o ranking do hotel
+                        hotel.defRanking(avaliacao);
+                            
+
+                        cout << "Check out realizado com sucesso!" << endl 
+                            << "Obrigado, volte sempre!" << endl;
+                        break;
+                    }
+                    case 3: // Cancelar reserva
+                    {   
+                        int num_quarto;
+
+                        // Pega o número do quarto
+                        cout << "Digite o número da reserva: " << endl;
+                        cin >> num_quarto;
+
+                        if(!hotel.removerReserva(num_quarto))
+                        {
+                            cout << "A reserva não foi encontrada." << endl;
+                            break;
+                        }
+
+                        cout << "Reserva cancelada com sucesso!" << endl;
+                        break;
+                    }
+                    case 4: // Printar lista de quartos desocupados
+                    {
+                        hotel.printQuarDesocupados();
+                        break;
+                    }
+                    case 5: // Pesquisar quarto
+                    {
+                        int numero;
+
+                        cout << "Digite o numero do quarto a ser pesquisado: ";
+                        cin >> numero;
+
+                        hotel.pesquisaQuarto(numero);
+                        break;
+                    }
+                    default:
+                        break;
+                    }
+                }
+                
 
                 break;
             }
@@ -342,5 +460,12 @@ void menufuncionario()
 
 void menucliente()
 {
-    cout << "Menu cliente";
+    cout << "Menu cliente"<< endl
+        << "(1) Fazer reserva" << endl
+        << "(2) Check out" << endl
+        << "(3) Cancelar reserva" << endl
+        << "(4) Printar lista de quartos desocupados" << endl
+        << "(5) Pesquisar quarto" << endl
+        << "(0) Finalizar" << endl 
+        << ">> ";
 }
