@@ -1,36 +1,38 @@
-#include <iostream>//Incluindo as bibliotecas na nossa main.
+#include <iostream>
 #include <locale.h>
 #include <ostream>
+#include <stdlib.h>
 #include <string>
 #include <vector>
 #include <fstream>
 #include <ctime>
-#include <clocale>
+// #include <clocale>
 
 using namespace std;
 
-#include "quarto.cpp"//Incluindo as classes utilizadas para o programa.
+#include "quarto.cpp"
 #include "QuartoPcD.cpp"
 #include "quartopremium.cpp"
 #include "reserva.cpp"
 #include "hotel.cpp"
 
-void menufuncionario();//Protótipo das funções utilizadas na main.
+void menufuncionario();
 void menucliente();
+void menuquartos();
 
 int main()
 {
-    setlocale(LC_ALL, "portuguese");//Para utilizar a linguagem de português.
+    srand((unsigned) time(0));
+    setlocale(LC_ALL, "portuguese");
+
     Hotel hotel;
 
-    if(!hotel.getAndares())//Verificação inicial se o hotel ja foi criado anteriormente ou não.
+    if(!hotel.getAndares())
     {
-        unsigned andares, maxQuartos_andares;//Criadas variáveis para armazenar valores do hotel.
+        unsigned andares, maxQuartos_andares;
 
         cout << "Primeira vez aqui ?\nDefina as propriedades do hotel" << endl;
-        cout << "Defina a quantidade de andares: ";
-        
-        //Definindo valores para andares e o numero maximo de quartos por andar.
+
         while(1)
         {
             cout << "Defina a quantidade de andares: ";
@@ -44,7 +46,7 @@ int main()
         
         while(1)
         {
-            cout << "\nDefina a quantidade máxima de quartos por andar: ";
+            cout << "\nDefina a quantidade máxima por andar: ";
             cin >> maxQuartos_andares;
 
             if(maxQuartos_andares >= 0)
@@ -54,17 +56,21 @@ int main()
         }
 
         hotel.setMaxQuartos(maxQuartos_andares);
-        hotel.setAndares(andares);//Setando os valores adquiridos no hotel.
+        hotel.setAndares(andares);
 
     }
 
-    cout << "\t\tBem-vindo" << endl;//Inicio em si do programa.
+    cout << "==================";
+    cout << "=======================" << endl;
+    cout << "\t\tBem-vindo" << endl;
+    cout << "=================";
+    cout << "========================" << endl;
 
     unsigned op;
 
-   while(1)
-   {
-        cout << "Entrar como:" << endl//Login para escolher qual o usuário, funcionário ou cliente?
+    while(1)
+    {
+        cout << "Entrar como:" << endl
             << "(1) Funcionário" << endl
             << "(2) Cliente" << endl
             << "(0) Sair" << endl
@@ -83,7 +89,7 @@ int main()
                 {
 
                     string alo;
-                    cout << "Insira a senha: " << endl;//Verificação da senha.
+                    cout << "Insira a senha: " << endl;
                     cin.sync();
                     cin >> alo;
 
@@ -97,22 +103,26 @@ int main()
 
                             unsigned op;
 
-                            menufuncionario();//Chamamento da funcao menu funcionário com suas opções.
+                            menufuncionario();
                             cin >> op;
 
                             switch(op)
                             {
-                                case 0://Realiza a saida do programa.
+                                case 0:
                                     return 0;
-                                case 1://Adiciona quartos no hotel.
+                                case 1:
                                 {
                                     unsigned op = 0;
 
-                                    cout << "Escolha uma opcao" << endl
-                                        << "(1) adicionar quarto padrão" << endl
-                                        << "(2) adicionar quarto premium" << endl
-                                        << "(3) adicionar quarto PcD" << endl
-                                        << ">> ";
+                                    // cout << "Escolha uma opcao" << endl
+                                    //     << "(1) adicionar quarto padrão" << endl
+                                    //     << "(2) adicionar quarto premium" << endl
+                                    //     << "(3) adicionar quarto PcD" << endl
+                                    //     << ">> ";
+
+                                    cout << "Escolha um tipo de quarto para adicionar:" << endl;
+                                    menuquartos();
+
                                     cin >> op;
 
                                     if(op < 1 || op > 3)
@@ -124,7 +134,7 @@ int main()
                                     int andar, numero, camas, capacidade;
                                     float diaria;
 
-                                    while(1)//Recebendo variáveis comuns aos tres tipos de quartos.
+                                    while(1)
                                     {
                                         cout << "Digite o andar: ";
                                         cin >> andar;
@@ -149,7 +159,7 @@ int main()
 
                                     switch(op)
                                     {
-                                        case 1://Adicionando quarto simples.
+                                        case 1:
                                         {
                                             Quarto quarto(andar, camas, capacidade, diaria, numero);
                                             if(!hotel.addQuarto(quarto))
@@ -162,7 +172,7 @@ int main()
 
                                             break;
                                         }
-                                        case 2://Adicionando quarto premium.
+                                        case 2:
                                         {
                                             int wifi, chuv, arcond, TV, servico;
 
@@ -205,7 +215,7 @@ int main()
 
                                             break;
                                         }
-                                        case 3://Adicionando o quarto PcD.
+                                        case 3:
                                         {
                                             int qnt;
                                             string tipo;
@@ -239,17 +249,18 @@ int main()
                                     }
                                     break;
                                 }
-                                case 2://Remoção de quartos.
+                                case 2:
                                 {
                                     int tipo, numero;
 
                                     cout << "Digite o número do quarto: ";
                                     cin >> numero;
 
-                                    cout << "Digite o tipo do quarto: " << endl
-                                        << "(1) remover quarto padrão" << endl
-                                        << "(2) remover quarto premium" << endl
-                                        << "(3) remover quarto pcd" << endl;
+                                    cout << "Digite o tipo do quarto a ser removido: " << endl;
+                                    menuquartos();
+                                        // << "(1) remover quarto padrão" << endl
+                                        // << "(2) remover quarto premium" << endl
+                                        // << "(3) remover quarto pcd" << endl;
                                     cin >> tipo;
 
                                     if(tipo < 1 || tipo > 3)
@@ -268,7 +279,7 @@ int main()
                                     cout << "Sucesso!" << endl;
                                     break;
                                 }
-                                case 3://Removendo uma das reservas.
+                                case 3:
                                 {
                                     int numero;
 
@@ -284,17 +295,17 @@ int main()
                                     cout << "Sucesso!" << endl;
                                     break;
                                 }
-                                case 4://Exibindo todos os quartos.
+                                case 4:
                                 {
                                     hotel.printQuartos();
                                     break;
                                 }
-                                case 5://Exibindo todas as reservas.
+                                case 5:
                                 {
                                     hotel.printReservas();
                                     break;
                                 }
-                                case 6://Pesquisando um quarto.
+                                case 6:
                                 {
                                     int numero;
 
@@ -315,7 +326,6 @@ int main()
             // menu cliente
             case 2:
             {
-
                 while (1)
                 {
                     unsigned op;
@@ -332,23 +342,45 @@ int main()
                     case 1: // Fazer reserva
                     {
                         // cria e pega o valor de variáveis p/ reserva
+                        int op;
                         int acompanhantes, num_quarto, dias;
                         string nome, tipo_quarto;
                         
-                        cout << "Digite o número de acompanhantes: ";
-                        cin >> acompanhantes;
-                        
-                        cout << "Digite o número do quarto: ";
-                        cin >> num_quarto;
-                        
-                        cout << "Digite o número de dias: ";
-                        cin >> dias;
+                        while(1)
+                        {
+                            cout << "Digite o número de acompanhantes: ";
+                            cin >> acompanhantes;
+                            
+                            cout << "Digite o número do quarto: ";
+                            cin >> num_quarto;
+                            
+                            cout << "Digite o número de dias: ";
+                            cin >> dias;
+
+                            if(acompanhantes > 0 && num_quarto > 0 && dias > 0)
+                                break;
+                            
+                            cout << "Dado(s) inválido(s), informe novamente!" << endl;
+                        }
                         
                         cout << "Digite o seu nome: ";
                         getline(cin >> ws, nome);
                         
-                        cout << "Digite o tipo de quarto: ";
-                        getline(cin >> ws, tipo_quarto);
+                        cout << "Digite o tipo de quarto " << endl;
+                        menuquartos();
+                        cin >> op;
+
+                        if(op == 1)
+                            tipo_quarto = "Quarto";
+                        else if(op == 2)
+                            tipo_quarto = "Quarto Premium";
+                        else if(op == 3)
+                            tipo_quarto = "Quarto PcD";
+                        else
+                        {
+                            cout << "Opção inválida!" << endl;
+                            break;
+                        }
 
                         // cria o objeto Reserva
                         Reserva reserva(acompanhantes, num_quarto, dias, nome, tipo_quarto);
@@ -382,11 +414,11 @@ int main()
                         cout << "Antes de ir, poderia deixar uma avaliação de 0 a 5 para o hotel?" << endl
                             << "Sendo 0 - Muito Ruim e 5 - Muito bom " << endl;
                             
-                            while ((avaliacao < 0 || avaliacao > 5))
-                            {
+                        while ((avaliacao < 0 || avaliacao > 5))
+                        {
                             cout << ">> ";
                             cin >> avaliacao;
-                            }
+                        }
 
                         // Altera o ranking do hotel
                         hotel.defRanking(avaliacao);
@@ -429,13 +461,10 @@ int main()
                         break;
                     }
                     default:
-                    cout << "Opcao incorreta" << endl
-                        << "Informe novamente" << endl;
-                        break;
+                        cout << "Opcao incorreta" << endl
+                            << "Informe novamente" << endl;
                     }
                 }
-                
-
                 break;
             }
             default:
@@ -448,7 +477,7 @@ int main()
     return 0;
 }
 
-void menufuncionario()//Funções que armazenam os menus cliente e funcionário.
+void menufuncionario()
 {
     cout << "Menu funcionario" << endl
         << "(1) Adicionar quarto" << endl
@@ -467,8 +496,16 @@ void menucliente()
         << "(1) Fazer reserva" << endl
         << "(2) Check out" << endl
         << "(3) Cancelar reserva" << endl
-        << "(4) Printar lista de quartos desocupados" << endl
+        << "(4) Printar lista de quartos disponíveis" << endl
         << "(5) Pesquisar quarto" << endl
         << "(0) Finalizar" << endl 
         << ">> ";
+}
+
+void menuquartos()
+{
+    cout << "(1) Quarto Padrão" << endl
+         << "(2) Quarto Premium" << endl
+         << "(3) Quarto PcD" << endl
+         << ">> ";
 }
