@@ -1,13 +1,11 @@
 #include <iostream>
 #include <iomanip>
-#include <ostream>
 #include <string>
 #include <vector>
 #include <fstream>
 #include <ctime>
 #include <clocale>
 #include <sstream>
-#include <cstdlib>
 
 using namespace std;
 
@@ -94,13 +92,16 @@ int main()
             {
                 while(1)
                 {
+                    string senha;
 
-                    string alo;
+                    system("cls");
+
                     cout << "Insira a senha: " << endl;
+                    cout << setfill('-') << setw(41) << "-" << endl;
                     cin.sync();
-                    cin >> alo;
+                    cin >> senha;
 
-                    if(alo != "admin")
+                    if(senha != "admin")
                         cout << "Senha incorreta!\n" << endl;
                     else
                     {
@@ -283,7 +284,7 @@ int main()
                                     system("cls");
 
                                     cout << "Removendo reserva" << endl;
-                                    cout << setfill('-') << setw(41) << "-" << endl;
+                                    cout << setfill('=') << setw(41) << "=" << endl;
                                     cout << "Informe o número da reserva: " << endl;
                                     cin >> numero;
 
@@ -304,6 +305,9 @@ int main()
                                 }
                                 case 5:
                                 {
+                                    system("cls");
+                                    cout << "Lista de reservas" << endl;
+                                    cout << setfill('=') << setw(41) << "=" << endl;
                                     hotel.printReservas();
                                     break;
                                 }
@@ -314,7 +318,7 @@ int main()
                                     system("cls");
 
                                     cout << "Pesquisando quarto" << endl;
-                                    cout << setfill('-') << setw(41) << "-" << endl;
+                                    cout << setfill('=') << setw(41) << "=" << endl;
                                     cout << "Digite o numero do quarto a ser pesquisado: ";
                                     cin >> numero;
 
@@ -327,6 +331,7 @@ int main()
                             system("pause");
                         }
                     }
+                    system("pause");
                 }
                 break;
             }
@@ -335,10 +340,10 @@ int main()
             {
                 while (1)
                 {
+                    system("cls");
                     unsigned op;
 
                     menucliente();
-
                     cin >> op;
 
                     switch (op)
@@ -355,6 +360,11 @@ int main()
                         
                         while(1)
                         {
+                            system("cls");
+
+                            cout << "Realizando reserva" << endl;
+                            cout << setfill('=') << setw(41) << "=" << endl;
+
                             cout << "Digite o número de acompanhantes: ";
                             cin >> acompanhantes;
                             
@@ -368,6 +378,7 @@ int main()
                                 break;
                             
                             cout << "Dado(s) inválido(s), informe novamente!" << endl;
+                            system("pause");
                         }
                         
                         cout << "Digite o seu nome: ";
@@ -408,6 +419,11 @@ int main()
                         int num_quarto;
                         float avaliacao = -1; // inicializando avaliacao
 
+                        system("cls");
+
+                        cout << "Realizando Check-out" << endl;
+                        cout << setfill('=') << setw(41) << "=" << endl;
+
                         // Pega o número do quarto
                         cout << "Digite o número da reserva: " << endl;
                         cin >> num_quarto;
@@ -441,6 +457,10 @@ int main()
                     {   
                         int num_quarto;
 
+                        system("cls");
+                        
+                        cout << "Cancelando reserva" << endl;
+                        cout << setfill('=') << setw(41) << "=" << endl;
                         // Pega o número do quarto
                         cout << "Digite o número da reserva: " << endl;
                         cin >> num_quarto;
@@ -456,12 +476,22 @@ int main()
                     }
                     case 4: // Printar lista de quartos desocupados
                     {
+                        system("cls");
+
+                        cout << "Quartos disponíveis" << endl;
+                        cout << setfill('=') << setw(41) << '=' << endl;
+
                         hotel.printQuarDesocupados();
                         break;
                     }
                     case 5: // Pesquisar quarto
                     {
                         int numero;
+
+                        system("cls");
+
+                        cout << "Pesquisando quarto" << endl;
+                        cout << setfill('=') << setw(41) << "=" << endl;
 
                         cout << "Digite o numero do quarto a ser pesquisado: ";
                         cin >> numero;
@@ -473,6 +503,7 @@ int main()
                         cout << "Opcao incorreta" << endl
                             << "Informe novamente" << endl;
                     }
+                    system("pause");
                 }
                 break;
             }
@@ -504,8 +535,10 @@ void menufuncionario()
 
 void menucliente()
 {
-    cout << "Menu cliente"<< endl
-        << "(1) Fazer reserva" << endl
+    cout << setfill('=') << setw(41) << "=" << endl;
+    cout << setfill(' ') << setw(15) << " " << "Menu cliente"<< endl;
+    cout << setfill('=') << setw(41) << "=" << endl;
+    cout  << "(1) Fazer reserva" << endl
         << "(2) Check out" << endl
         << "(3) Cancelar reserva" << endl
         << "(4) Printar lista de quartos disponíveis" << endl
