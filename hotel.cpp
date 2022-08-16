@@ -12,8 +12,8 @@ Hotel::Hotel()
     int index;
 
     ifstream arquivo_hotel("propHotel.txt", ios::in);
-
-    if(arquivo_hotel.is_open())
+	
+    if(arquivo_hotel.is_open()) // Se o arquivo existe, lê os valores
     {
         arquivo_hotel >> this->cont_avaliacoes;
         arquivo_hotel >> this->maxQuartos_andares;
@@ -37,6 +37,7 @@ Hotel::Hotel()
         this->ranking = 0;
     }
 
+	// Carregando os quartos padrão
     ifstream arquivo;
     arquivo.open("ListaQuartos.txt", ios::in);
 
@@ -61,7 +62,8 @@ Hotel::Hotel()
         }
         arquivo.close();
     }
-
+	
+	// Carregando os quartos premium
     ifstream arquivo2("ListaQuartosPremium.txt", ios::in);
 
     if(arquivo2.is_open()){
@@ -97,6 +99,7 @@ Hotel::Hotel()
         arquivo2.close();
     }
 
+	// Carregando os quartos para pessoas com deficiência
     ifstream arquivo3("ListaQuartosPcD.txt", ios::in);
     // arquivo3.open("ListaQuartosPcD.txt", ios::in);
 
@@ -127,6 +130,7 @@ Hotel::Hotel()
         arquivo3.close();
     }
 
+	// Carregando a lista de reservas do hotel
     ifstream arquivo4("ListaReservas.txt", ios::in);
 
     if(arquivo4.is_open())
