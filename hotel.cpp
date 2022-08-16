@@ -18,13 +18,13 @@ Hotel::Hotel()
         arquivo_hotel >> this->cont_avaliacoes;
         arquivo_hotel >> this->maxQuartos_andares;
         arquivo_hotel >> this->pessoas;
-        arquivo_hotel >> this->andares;
+        arquivo_hotel >> this->andares; // checar se for mudar a variável dos andares
         arquivo_hotel >> this->ranking;
         
         //rever...
-	    setAndares(andares);
+	    setAndares(andares); // checar se for mudar a variável dos andares
 
-        for(unsigned i = 0; i < andares; i++)
+        for(unsigned i = 0; i < andares; i++) // checar se for mudar a variável dos andares
             arquivo_hotel >> quartos_andar[i];
         // quartos_andar.erase(quartos_andar.begin() + quartos_andar.size)
     }
@@ -33,7 +33,7 @@ Hotel::Hotel()
         this->cont_avaliacoes = 0;
         this->maxQuartos_andares = 0;
         this->pessoas = 0;
-        this->andares = 0;
+        this->andares = 0; // checar se for mudar a variável dos andares
         this->ranking = 0;
     }
 
@@ -187,7 +187,7 @@ bool Hotel::addQuarto(Quarto& q)
             return false;
     }
 
-    if(q.getAndar() > andares || q.getAndar() < 0 || quartos_andar[q.getAndar()] == maxQuartos_andares)
+    if(q.getAndar() > andares || q.getAndar() < 0 || quartos_andar[q.getAndar()] == maxQuartos_andares) // checar se for mudar a variável dos andares
         return false;
 
     lista_quarto.emplace_back(q);
@@ -214,7 +214,7 @@ bool Hotel::addPremium(QuartoPremium& q)
             return false;
     }
 
-    if(q.getAndar() > andares || q.getAndar() < 0 || quartos_andar[q.getAndar()] == maxQuartos_andares)
+    if(q.getAndar() > andares || q.getAndar() < 0 || quartos_andar[q.getAndar()] == maxQuartos_andares) // checar se for mudar a variável dos andares
         return false;
 
     lista_premium.emplace_back(q);
@@ -240,7 +240,7 @@ bool Hotel::addPcD(QuartoPcD& q)
             return false;
     }
 
-    if(q.getAndar() > andares || q.getAndar() < 0 || quartos_andar[q.getAndar()] == maxQuartos_andares)
+    if(q.getAndar() > andares || q.getAndar() < 0 || quartos_andar[q.getAndar()] == maxQuartos_andares) // checar se for mudar a variável dos andares
         return false;
 
     lista_PcD.emplace_back(q);
@@ -433,9 +433,9 @@ bool Hotel::rmv_quarto(const int& num_quarto, int tipo)
 }
 
 // Adicionar valor aos andares do hotel.
-void Hotel::setAndares(int a)
+void Hotel::setAndares(int a) 
 {
-    this->andares = a; //redudntante
+    this->andares = a; //redudntante // checar se for mudar a variável dos andares
     quartos_andar.resize(andares);
 }
 
@@ -624,9 +624,9 @@ float Hotel::getRanking() const
 }
 
 //Retorna o numero de andares.
-int Hotel::getAndares() const
+int Hotel::getAndares() const 
 {
-    return andares;
+    return andares; // checar se for mudar a variável dos andares
 }
 
 //Setando o valor maximo de quartos.
@@ -747,7 +747,7 @@ void Hotel::gravaListas(){
         arquivo_hotel << this->cont_avaliacoes << endl;
         arquivo_hotel << this->maxQuartos_andares << endl;
         arquivo_hotel << this->pessoas << endl;
-        arquivo_hotel << this->andares << endl;
+        arquivo_hotel << this->andares << endl; // checar se for mudar a variável dos andares
         arquivo_hotel << this->ranking << endl;
 
         for(const auto& andar : quartos_andar)
