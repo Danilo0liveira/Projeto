@@ -117,7 +117,7 @@ int main()
                             {
                                 case 0:
                                     return 0;
-                                case 1:
+                                case 1: // adicionar quarto
                                 {
                                     unsigned op = 0;
 
@@ -248,7 +248,7 @@ int main()
                                     }
                                     break;
                                 }
-                                case 2:
+                                case 2: // remover quarto
                                 {
                                     int tipo, numero;
 
@@ -277,7 +277,7 @@ int main()
                                     cout << "Sucesso!" << endl;
                                     break;
                                 }
-                                case 3:
+                                case 3: // remover reserva
                                 {
                                     int numero;
 
@@ -297,19 +297,19 @@ int main()
                                     cout << "Sucesso!" << endl;
                                     break;
                                 }
-                                case 4:
+                                case 4: // printar quartos
                                 {
                                     system("cls");
                                     hotel.printQuartos();
                                     break;
                                 }
-                                case 5:
+                                case 5: // printar quartos ocupados
                                 {
                                     system("cls");
                                     hotel.printQuarOcupados();
                                     break;
                                 }
-                                case 6:
+                                case 6: // printar lista de reservas
                                 {
                                     system("cls");
                                     cout << "Lista de reservas" << endl;
@@ -317,7 +317,7 @@ int main()
                                     hotel.printReservas();
                                     break;
                                 }
-                                case 7:
+                                case 7: // pesquisar quarto
                                 {
                                     int numero;
 

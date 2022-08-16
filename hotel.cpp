@@ -556,7 +556,7 @@ void Hotel::printQuarOcupados() const
                 cout << "Quartos padroes: "<< endl << "Numero: " << lista_quarto[u].getNumero()
                 << endl << "Andar: " << lista_quarto[u].getAndar() << endl << "Camas: " << lista_quarto[u].getCamas()
                 << endl << "Capacidade: " << lista_quarto[u].getCapacidade() << endl << "Diaria: R$"
-                << lista_quarto[u].getDiaria() << endl << "Situacao: ocupado"<< endl << endl;
+                << lista_quarto[u].getDiaria() << endl << "Situacao: ocupado"<< endl;
             }
         }
 
@@ -570,7 +570,7 @@ void Hotel::printQuarOcupados() const
                 << "Chuveiro Eletricos: " << lista_premium[u].getChuvelet() << " chuveiros" << endl
                 << "Ar Condicionado: " << lista_premium[u].getArcond() << " BTUs" << endl << "TV: "
                 << lista_premium[u].getTv() << " polegadas" << endl << "Servico de quarto: "
-                << lista_premium[u].getServico() << " funcionarios" << endl << "Situacao: ocupado"<< endl << endl;
+                << lista_premium[u].getServico() << " funcionarios" << endl << "Situacao: ocupado"<< endl;
             }
         }
         for(unsigned u = 0; u < lista_PcD.size(); u++){
@@ -580,7 +580,7 @@ void Hotel::printQuarOcupados() const
                 << endl << "Andar: " << lista_PcD[u].getAndar() << endl << "Camas: " << lista_PcD[u].getCamas()
                 << endl << "Capacidade: " << lista_PcD[u].getCapacidade() << endl << "Diaria: R$"
                 << lista_PcD[u].getDiaria() << endl << "Tipo adaptacao: " << lista_PcD[u].getTipoAdaptacao() << endl
-                << "Servicos especiais: " << lista_PcD[u].getServ() << " funcionarios" << endl << "Situacao: ocupado"<< endl << endl;
+                << "Servicos especiais: " << lista_PcD[u].getServ() << " funcionarios" << endl << "Situacao: ocupado"<< endl;
             }
         }
     }
