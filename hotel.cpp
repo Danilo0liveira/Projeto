@@ -541,6 +541,51 @@ void Hotel::printQuarDesocupados() const
     }
 }
 
+//Exibir apenas os quartos ocupados.
+void Hotel::printQuarOcupados() const
+{
+    if(lista_PcD.empty() && lista_quarto.empty() && lista_premium.empty())
+        cout << "Não há quartos no hotel!" << endl;
+    else if(lista_reservas.empty())
+        cout << "Não há quartos reservados" << endl;
+    else
+    {
+        for(unsigned u = 0; u < lista_quarto.size(); u++){
+            if(lista_quarto[u].getSituacao())
+            {
+                cout << "Quartos padroes: "<< endl << "Numero: " << lista_quarto[u].getNumero()
+                << endl << "Andar: " << lista_quarto[u].getAndar() << endl << "Camas: " << lista_quarto[u].getCamas()
+                << endl << "Capacidade: " << lista_quarto[u].getCapacidade() << endl << "Diaria: R$"
+                << lista_quarto[u].getDiaria() << endl << "Situacao: ocupado"<< endl << endl;
+            }
+        }
+
+        for(unsigned u = 0; u < lista_premium.size(); u++){
+            if(lista_premium[u].getSituacao())
+            {
+                cout << "Quartos premium: "<< endl << "Numero: " << lista_premium[u].getNumero()
+                << endl << "Andar: " << lista_premium[u].getAndar() << endl << "Camas: " << lista_premium[u].getCamas()
+                << endl << "Capacidade: " << lista_premium[u].getCapacidade() << endl << "Diaria: R$"
+                << lista_premium[u].getDiaria() << endl << "Wifi: " << lista_premium[u].getWifi() << " mbps" << endl
+                << "Chuveiro Eletricos: " << lista_premium[u].getChuvelet() << " chuveiros" << endl
+                << "Ar Condicionado: " << lista_premium[u].getArcond() << " BTUs" << endl << "TV: "
+                << lista_premium[u].getTv() << " polegadas" << endl << "Servico de quarto: "
+                << lista_premium[u].getServico() << " funcionarios" << endl << "Situacao: ocupado"<< endl << endl;
+            }
+        }
+        for(unsigned u = 0; u < lista_PcD.size(); u++){
+            if(lista_PcD[u].getSituacao())
+            {
+                cout << "Quartos PCD: "<< endl << "Numero: " << lista_PcD[u].getNumero()
+                << endl << "Andar: " << lista_PcD[u].getAndar() << endl << "Camas: " << lista_PcD[u].getCamas()
+                << endl << "Capacidade: " << lista_PcD[u].getCapacidade() << endl << "Diaria: R$"
+                << lista_PcD[u].getDiaria() << endl << "Tipo adaptacao: " << lista_PcD[u].getTipoAdaptacao() << endl
+                << "Servicos especiais: " << lista_PcD[u].getServ() << " funcionarios" << endl << "Situacao: ocupado"<< endl << endl;
+            }
+        }
+    }
+}
+
 //Pesquisa um dos quartos. //adicionar tipo do quarto a ser pesquisado!
 void Hotel::pesquisaQuarto(int numero) const
 {

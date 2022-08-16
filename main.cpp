@@ -306,12 +306,18 @@ int main()
                                 case 5:
                                 {
                                     system("cls");
+                                    hotel.printQuarOcupados();
+                                    break;
+                                }
+                                case 6:
+                                {
+                                    system("cls");
                                     cout << "Lista de reservas" << endl;
                                     cout << setfill('=') << setw(41) << "=" << endl;
                                     hotel.printReservas();
                                     break;
                                 }
-                                case 6:
+                                case 7:
                                 {
                                     int numero;
 
@@ -526,8 +532,9 @@ void menufuncionario()
          << "(2) Remover quarto" << endl
          << "(3) Remover reserva" << endl
          << "(4) Printar lista de quartos" << endl
-         << "(5) Printar lista de reservas" << endl
-         << "(6) Pesquisar quarto" << endl
+         << "(5) Printar lista de quartos ocupados" << endl
+         << "(6) Printar lista de reservas" << endl
+         << "(7) Pesquisar quarto" << endl
          << "(0) Finalizar" << endl
          << ">> ";
         //             Menu funcionÃ¡rio

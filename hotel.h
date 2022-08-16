@@ -30,6 +30,7 @@ public:
     void defRanking(float);//Definicao de ranking.
     void printQuartos() const;//Exibir todos os quartos.
     void printQuarDesocupados() const;//Exibir apenas os quartos desocupados.
+    void printQuarOcupados() const;//Exibir apenas os quartos ocupados.
     void printReservas() const;
     void pesquisaQuarto(int) const;//Pesquisa um dos quartos.
     float getRanking() const;//Retorna ranking do hotel inteiro.
