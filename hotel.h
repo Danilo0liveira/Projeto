@@ -13,8 +13,8 @@ private:
     
     //Os atributos utilizados para o quarto.
     float ranking;  //Ranking do hotel.
-    int andares;    //Andares possiveis no hotel.
     int pessoas;    //Numero de pessoas no hotel.
+    int andares;
     int maxQuartos_andares; //Numero maximo de quartos por andares no hotel.
     int cont_avaliacoes; //Contador de avaliações
 
@@ -26,11 +26,11 @@ public:
     bool addReserva(Reserva&);
     bool rmv_quarto(const int&, int);
     bool removerReserva(int);//Metodo de cancelar os reservas.
-    void setAndares(int);//Adicionar valor aos andares do hotel.
+    void setAndares(int&);//Adicionar valor aos andares do hotel.
     void defRanking(float);//Definicao de ranking.
     void printQuartos() const;//Exibir todos os quartos.
     void printQuarDesocupados() const;//Exibir apenas os quartos desocupados.
-    void printQuarOcupados() const;//Exibir apenas os quartos ocupados.
+    void printQuarOcupados() const;//Exibir apenas os quartos desocupados.
     void printReservas() const;
     void pesquisaQuarto(int) const;//Pesquisa um dos quartos.
     float getRanking() const;//Retorna ranking do hotel inteiro.

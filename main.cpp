@@ -18,6 +18,7 @@ using namespace std;
 void menufuncionario();
 void menucliente();
 void menuquartos();
+void menuinicial(Hotel&);
 
 int main()
 {
@@ -28,7 +29,7 @@ int main()
 
     if(!hotel.getAndares())
     {
-        unsigned andares, maxQuartos_andares;
+        int andares, maxQuartos_andares;
 
         cout << "Primeira vez aqui ?\nDefina as propriedades do hotel" << endl;
 
@@ -51,42 +52,17 @@ int main()
         hotel.setAndares(andares);
 
     }
-
-    stringstream strstream;
-
-    if(!hotel.get_contAva())
-        strstream << "sem availações";
-    else
-        strstream << hotel.getRanking() / hotel.get_contAva();
-                                
-    // 7
-    cout << setfill('=') << setw(41) << "=" << endl;
-    cout << setfill(' ') << setw(16) << " " << "Bem-vindo" << endl;
-    cout << setfill(' ') << setw(14) << " " << "Hotel OgaVirt" << endl;
-
-    (strstream.str().size() > 10) ? 
-    cout << setfill(' ') << setw(6) << " " << "Avaliação: " << strstream.str() << endl 
-    :
-    cout << setfill(' ') << setw(12) << " " << "Avaliação:  " << strstream.str() << endl;
-    
-    cout << setfill('=') << setw(41) << "=" << endl;
-
     unsigned op;
 
     while(1)
     {
-        cout << "Entrar como:" << endl
-            << "(1) Funcionário" << endl
-            << "(2) Cliente" << endl
-            << "(0) Sair" << endl
-            << ">> ";
+        menuinicial(hotel);
         cin >> op;
 
         switch(op)
         {
             case 0:
                 return 0;
-
             // menu funcionário
             case 1:
             {
@@ -105,19 +81,22 @@ int main()
                         cout << "Senha incorreta!\n" << endl;
                     else
                     {
+                        unsigned op;
                         while(1)
                         {
                             system("cls");
-                            unsigned op;
 
                             menufuncionario();
                             cin >> op;
+
+                            if (op == 8)
+                                break;
 
                             switch(op)
                             {
                                 case 0:
                                     return 0;
-                                case 1: // adicionar quarto
+                                case 1:
                                 {
                                     unsigned op = 0;
 
@@ -248,7 +227,7 @@ int main()
                                     }
                                     break;
                                 }
-                                case 2: // remover quarto
+                                case 2:
                                 {
                                     int tipo, numero;
 
@@ -277,7 +256,7 @@ int main()
                                     cout << "Sucesso!" << endl;
                                     break;
                                 }
-                                case 3: // remover reserva
+                                case 3:
                                 {
                                     int numero;
 
@@ -297,19 +276,21 @@ int main()
                                     cout << "Sucesso!" << endl;
                                     break;
                                 }
-                                case 4: // printar quartos
+                                case 4:
                                 {
                                     system("cls");
                                     hotel.printQuartos();
                                     break;
                                 }
-                                case 5: // printar quartos ocupados
+                                case 5:
                                 {
                                     system("cls");
+                                    cout << "Quartos ocupados" << endl;
+                                    cout << setfill('=') << setw(41) << "=" << endl;
                                     hotel.printQuarOcupados();
                                     break;
                                 }
-                                case 6: // printar lista de reservas
+                                case 6:
                                 {
                                     system("cls");
                                     cout << "Lista de reservas" << endl;
@@ -317,7 +298,7 @@ int main()
                                     hotel.printReservas();
                                     break;
                                 }
-                                case 7: // pesquisar quarto
+                                case 7:
                                 {
                                     int numero;
 
@@ -333,9 +314,12 @@ int main()
                                 }
                                 default:
                                     cout << "Opção inválida" << endl;
+                                    break;
                             }
                             system("pause");
                         }
+                        if (op == 8)
+                            break; 
                     }
                     system("pause");
                 }
@@ -351,6 +335,9 @@ int main()
 
                     menucliente();
                     cin >> op;
+
+                    if (op == 6)
+                        break;
 
                     switch (op)
                     {
@@ -484,9 +471,6 @@ int main()
                     {
                         system("cls");
 
-                        cout << "Quartos disponíveis" << endl;
-                        cout << setfill('=') << setw(41) << '=' << endl;
-
                         hotel.printQuarDesocupados();
                         break;
                     }
@@ -510,6 +494,8 @@ int main()
                             << "Informe novamente" << endl;
                     }
                     system("pause");
+                    if (op == 7)
+                        break;
                 }
                 break;
             }
@@ -518,9 +504,39 @@ int main()
                 cout << "Opcao incorreta" << endl
                 << "Informe novamente" << endl;
             }
+            system("pause");
         }
     }
     return 0;
+}
+
+void menuinicial(Hotel& hotel)
+{
+    stringstream strstream;
+
+    system("cls");
+
+    if(!hotel.get_contAva())
+        strstream << "sem availações";
+    else
+        strstream << hotel.getRanking() / hotel.get_contAva();
+                                    
+    cout << setfill('=') << setw(41) << "=" << endl;
+    cout << setfill(' ') << setw(16) << " " << "Bem-vindo" << endl;
+    cout << setfill(' ') << setw(14) << " " << "Hotel OgaVirt" << endl;
+
+    (strstream.str().size() > 10) ? 
+    cout << setfill(' ') << setw(6) << " " << "Avaliação: " << strstream.str() << endl 
+    :
+    cout << setfill(' ') << setw(12) << " " << "Avaliação:  " << strstream.str() << endl;
+        
+    cout << setfill('=') << setw(41) << "=" << endl;
+
+    cout << "Entrar como:" << endl
+        << "(1) Funcionário" << endl
+        << "(2) Cliente" << endl
+        << "(0) Sair" << endl
+        << ">> ";
 }
 
 void menufuncionario()
@@ -535,9 +551,9 @@ void menufuncionario()
          << "(5) Printar lista de quartos ocupados" << endl
          << "(6) Printar lista de reservas" << endl
          << "(7) Pesquisar quarto" << endl
+         << "(8) retornar ao menu principal" << endl
          << "(0) Finalizar" << endl
          << ">> ";
-        //             Menu funcionÃ¡rio
 }
 
 void menucliente()
@@ -550,6 +566,7 @@ void menucliente()
         << "(3) Cancelar reserva" << endl
         << "(4) Printar lista de quartos disponíveis" << endl
         << "(5) Pesquisar quarto" << endl
+        << "(6) retornar ao menu principal" << endl
         << "(0) Finalizar" << endl 
         << ">> ";
 }
