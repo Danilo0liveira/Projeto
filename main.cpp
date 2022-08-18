@@ -19,6 +19,9 @@ void menufuncionario();
 void menucliente();
 void menuquartos();
 
+int verificaInt();
+float verificaFloat();
+
 int main()
 {
     srand((unsigned) time(0));
@@ -35,10 +38,10 @@ int main()
         while(1)
         {
             cout << "Defina a quantidade de andares: ";
-            cin >> andares;
+            andares = verificaInt();
 
             cout << "Defina a quantidade máxima de quartos por andar: ";
-            cin >> maxQuartos_andares;
+            maxQuartos_andares = verificaInt();
 
             if(andares > 0 && maxQuartos_andares > 0)
                 break;
@@ -80,7 +83,7 @@ int main()
             << "(2) Cliente" << endl
             << "(0) Sair" << endl
             << ">> ";
-        cin >> op;
+        op = verificaInt();
 
         switch(op)
         {
@@ -111,7 +114,7 @@ int main()
                             unsigned op;
 
                             menufuncionario();
-                            cin >> op;
+                            op = verificaInt();
 
                             switch(op)
                             {
@@ -125,7 +128,7 @@ int main()
 
                                     cout << "Escolha um tipo de quarto para adicionar" << endl;
                                     menuquartos();
-                                    cin >> op;
+                                    op = verificaInt();
                                     cout << setfill('-') << setw(41) << "-" << endl; 
 
                                     if(op < 1 || op > 3)
@@ -140,19 +143,19 @@ int main()
                                     while(1)
                                     {
                                         cout << "Digite o andar: ";
-                                        cin >> andar;
+                                        andar = verificaInt();
 
                                         cout << "Digite o número: ";
-                                        cin >> numero;
+                                        numero = verificaInt();
 
                                         cout << "Digite a capacidade: ";
-                                        cin >> capacidade;
+                                        capacidade = verificaInt();
 
                                         cout << "Digite a quantidade de camas: ";
-                                        cin >> camas;
+                                        camas  = verificaInt();
 
                                         cout << "Digite a diária: ";
-                                        cin >> diaria;
+                                        diaria = verificaFloat();
 
                                         if(andar > 0 && numero > 0 && capacidade > 0 && camas > 0 && diaria > 0)
                                             break;
@@ -180,15 +183,15 @@ int main()
                                             {
 
                                                 cout << "Digite a velocidade wifi: ";
-                                                cin >> wifi;
+                                                wifi = verificaInt();
                                                 cout << "Quantidade de chuveiros elétricos: ";
-                                                cin >> chuv;
+                                                chuv = verificaInt();
                                                 cout << "Digite a potência do ar-condicionado: ";
-                                                cin >> arcond;
+                                                arcond = verificaInt();
                                                 cout << "Digite a quantidade de polegadas da TV:  ";
-                                                cin >> TV;
+                                                TV = verificaInt();
                                                 cout << "Digite a quantidade de funcionários:  ";
-                                                cin >> servico;
+                                                servico = verificaInt();
 
                                                 if(wifi > 0 && chuv > 0 && arcond > 0 && TV > 0 && servico > 0)
                                                     break;
@@ -226,7 +229,7 @@ int main()
                                             while(1)
                                             {
                                                 cout << "Digite a quantidade de funcionários:  ";
-                                                cin >> qnt;
+                                                qnt = verificaInt();
 
                                                 if(qnt > 0)
                                                     break;
@@ -257,7 +260,7 @@ int main()
                                     cout << "Removendo quarto" << endl;
                                     cout << "Digite o tipo do quarto a ser removido" << endl;
                                     menuquartos();
-                                    cin >> tipo;
+                                    tipo = verificaInt();
 
                                     if(tipo < 1 || tipo > 3)
                                     {
@@ -266,7 +269,7 @@ int main()
                                     }
 
                                     cout << "\nDigite o número do quarto: ";
-                                    cin >> numero;
+                                    numero = verificaInt();
 
 
                                     if (!hotel.rmv_quarto(numero, tipo))
@@ -286,7 +289,7 @@ int main()
                                     cout << "Removendo reserva" << endl;
                                     cout << setfill('=') << setw(41) << "=" << endl;
                                     cout << "Informe o número da reserva: " << endl;
-                                    cin >> numero;
+                                    numero = verificaInt();
 
                                     if(!hotel.removerReserva(numero))
                                     {
@@ -326,7 +329,7 @@ int main()
                                     cout << "Pesquisando quarto" << endl;
                                     cout << setfill('=') << setw(41) << "=" << endl;
                                     cout << "Digite o numero do quarto a ser pesquisado: ";
-                                    cin >> numero;
+                                    numero = verificaInt();
 
                                     hotel.pesquisaQuarto(numero);
                                     break;
@@ -350,7 +353,7 @@ int main()
                     unsigned op;
 
                     menucliente();
-                    cin >> op;
+                    op = verificaInt();
 
                     switch (op)
                     {
@@ -372,13 +375,13 @@ int main()
                             cout << setfill('=') << setw(41) << "=" << endl;
 
                             cout << "Digite o número de acompanhantes: ";
-                            cin >> acompanhantes;
+                            acompanhantes = verificaInt();
                             
                             cout << "Digite o número do quarto: ";
-                            cin >> num_quarto;
+                            num_quarto = verificaInt();
                             
                             cout << "Digite o número de dias: ";
-                            cin >> dias;
+                            dias = verificaInt();
 
                             if(acompanhantes > 0 && num_quarto > 0 && dias > 0)
                                 break;
@@ -392,7 +395,7 @@ int main()
                         
                         cout << "Digite o tipo de quarto " << endl;
                         menuquartos();
-                        cin >> op;
+                        op = verificaInt();
 
                         if(op == 1)
                             tipo_quarto = "Quarto";
@@ -432,7 +435,7 @@ int main()
 
                         // Pega o número do quarto
                         cout << "Digite o número da reserva: " << endl;
-                        cin >> num_quarto;
+                        num_quarto = verificaInt();
 
                         // Remove a reserva, se encontrada no sistema
                         if(!hotel.removerReserva(num_quarto))
@@ -448,7 +451,7 @@ int main()
                         while ((avaliacao < 0 || avaliacao > 5))
                         {
                             cout << ">> ";
-                            cin >> avaliacao;
+                            avaliacao = verificaFloat();
                         }
 
                         // Altera o ranking do hotel
@@ -469,7 +472,7 @@ int main()
                         cout << setfill('=') << setw(41) << "=" << endl;
                         // Pega o número do quarto
                         cout << "Digite o número da reserva: " << endl;
-                        cin >> num_quarto;
+                        num_quarto = verificaInt();
 
                         if(!hotel.removerReserva(num_quarto))
                         {
@@ -500,7 +503,7 @@ int main()
                         cout << setfill('=') << setw(41) << "=" << endl;
 
                         cout << "Digite o numero do quarto a ser pesquisado: ";
-                        cin >> numero;
+                        numero = verificaInt();
 
                         hotel.pesquisaQuarto(numero);
                         break;
@@ -561,4 +564,54 @@ void menuquartos()
          << "(2) Quarto Premium" << endl
          << "(3) Quarto PcD" << endl
          << ">> ";
+}
+
+int verificaInt(){ // verifica se um número é int
+    int op; char ch;
+    while(1){
+        cin >> op;
+        cin.get(ch);
+        if(cin.fail()){ // verifica se houve algum erro no cin. exemplo: inserir um 'a' no lugar de um número 
+            cout << "Opcao invalida! Por favor, insira uma opcao certa" << endl
+            << ">> ";
+            cin.clear();
+            cin.sync();
+            continue;
+        } else if(ch != '\n' && ch != ' '){ // verifica se há algum caracter junto ao numero, tornando-o inválido. exemplo: 12asd
+            cout << "Opcao invalida! Por favor, insira uma opcao certa" << endl
+            << ">> ";
+            cin.clear();
+            cin.sync();
+            continue;
+        }
+        else {
+            break;
+        }
+    }
+    return op;
+}
+
+float verificaFloat(){ // verifica se um número é float
+    float op; char ch;
+    while(1){
+        cin >> op;
+        cin.get(ch);
+        if(cin.fail()){ // verifica se houve algum erro no cin. exemplo: inserir um 'a' no lugar de um número 
+            cout << "Opcao invalida! Por favor, insira uma opcao certa" << endl
+            << ">> ";
+            cin.clear();
+            cin.sync();
+            continue;
+        }else if(ch != '\n' && ch != ' '){ // verifica se há algum caracter junto ao numero, tornando-o inválido. exemplo: 12.54asd
+            cout << "Opcao invalida! Por favor, insira uma opcao certa" << endl
+            << ">> ";
+            cin.clear();
+            cin.sync();
+            continue;
+        }
+         else {
+            break;
+        }
+    }
+    return op;
 }
