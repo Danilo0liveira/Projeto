@@ -2,8 +2,8 @@
 
 QuartoPremium::QuartoPremium(int andar, int camas, int capacidade, float diaria, int numero) : Quarto(andar, camas, capacidade , diaria, numero)
 {
-    this -> wifi = 0; 
-    this -> chuvelet = 0;   
+    this -> wifi = 0;
+    this -> chuvelet = 0;
     this -> arcond = 0;
     this -> tv = 0;
     this -> servquart = 0;
@@ -20,12 +20,12 @@ void QuartoPremium::setChuvelet(const int& chuvelet)
     this->chuvelet = chuvelet;
 }
 
-void QuartoPremium::setArcond(const int& arcond)
+void QuartoPremium::setArcond(const float& arcond)
 {
     this->arcond = arcond;
 }
 
-void QuartoPremium::setTv(const int& tv)
+void QuartoPremium::setTv(const float& tv)
 {
     this->tv = tv;
 }
@@ -46,12 +46,12 @@ int QuartoPremium::getChuvelet() const
     return chuvelet;
 }
 
-int QuartoPremium::getArcond() const
+float QuartoPremium::getArcond() const
 {
     return arcond;
 }
 
-int QuartoPremium::getTv() const
+float QuartoPremium::getTv() const
 {
     return tv;
 }

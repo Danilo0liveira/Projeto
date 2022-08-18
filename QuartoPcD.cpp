@@ -7,6 +7,16 @@ QuartoPcD::QuartoPcD(int andar, int camas, int capacidade, float diaria, int num
     this->servicoEspecial = servicoEspecial;
 }
 
+void QuartoPcD::setTipoAdaptacao(string tipoAdaptacao)
+{
+    this->tipoAdaptacao = tipoAdaptacao;
+}
+
+void QuartoPcD::setServicoEspecial(int servicoEspecial)
+{
+    this->servicoEspecial = servicoEspecial;
+}
+
 //metodos gets
 string QuartoPcD::getTipoAdaptacao() const
 {

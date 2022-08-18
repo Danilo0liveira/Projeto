@@ -14,6 +14,9 @@ class Quarto{
 
         // metodos
         void setSituacao(bool);
+        void setDiaria(float);
+        void setCamas(int);
+        void setCapacidade(int);
         int getAndar() const;
         int getCamas() const;
         int getCapacidade() const;

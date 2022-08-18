@@ -16,6 +16,18 @@ void Quarto :: setSituacao(bool situacao){
     this -> situacao = situacao;
 }
 
+void Quarto::setDiaria(float diaria){
+    this->diaria = diaria;
+}
+
+void Quarto::setCamas(int camas){
+    this->camas = camas;
+}
+
+void Quarto::setCapacidade(int capacidade){
+    this->capacidade = capacidade;
+}
+
 // metodos get
 int Quarto :: getAndar() const{
     return andar;
