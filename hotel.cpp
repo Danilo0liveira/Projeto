@@ -895,7 +895,7 @@ void Hotel::printQuartos() const
 
         for(unsigned u = 0; u < lista_quarto.size(); u++)
         {
-            cout << endl << "Numero: " << lista_quarto[u].getNumero()
+            cout << "Numero: " << lista_quarto[u].getNumero()
             << endl << "Andar: " << lista_quarto[u].getAndar() << endl << "Camas: " << lista_quarto[u].getCamas()
             << endl << "Capacidade: " << lista_quarto[u].getCapacidade() << endl << "Diaria: R$"
             << lista_quarto[u].getDiaria() << endl;
@@ -916,7 +916,7 @@ void Hotel::printQuartos() const
         cout << setfill('=') << setw(41) << "=" << endl;
 
         for(unsigned u = 0; u < lista_premium.size(); u++){
-            cout << endl << "Numero: " << lista_premium[u].getNumero()
+            cout << "Numero: " << lista_premium[u].getNumero()
             << endl << "Andar: " << lista_premium[u].getAndar() << endl << "Camas: " << lista_premium[u].getCamas()
             << endl << "Capacidade: " << lista_premium[u].getCapacidade() << endl << "Diaria: R$"
             << lista_premium[u].getDiaria() << endl << "Wifi: " << lista_premium[u].getWifi() << " mbps" << endl
@@ -936,6 +936,7 @@ void Hotel::printQuartos() const
             system("pause");
 
         system("cls");
+
         cout << "Quarto PcD" << endl;
         cout << setfill('=') << setw(41) << "=" << endl;
 
@@ -964,8 +965,7 @@ void Hotel::printQuarDesocupados() const
         cout << "Não há quartos disponíveis" << endl;
     else
     {
-
-        bool cont_1, cont_2;
+        bool cont_1 = true, cont_2 = true;
 
         cout << "Quarto Padrão" << endl;
         cout << setfill('=') << setw(41) << "=" << endl;

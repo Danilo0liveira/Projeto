@@ -258,7 +258,7 @@ int main()
 
                                     if (!hotel.rmv_quarto(numero, tipo))
                                     {
-                                        cout << "Não foi possível encontrar o quarto!" << endl;
+                                        cout << "Não foi possível remover o quarto!" << endl;
                                         break;
                                     }
                                     cout << "Sucesso!" << endl;
@@ -325,7 +325,9 @@ int main()
                                     int nm, tipo;
                                     int atrib;
 
-                                    cout << "Digite o tipo de quarto a ser modificado: ";
+                                    system("cls");
+                                    
+                                    cout << "Digite o tipo de quarto a ser modificado: " << endl;
                                     menuquartos();
                                     tipo = verificaInt();
 
@@ -713,9 +715,8 @@ float verificaFloat(){ // verifica se um número é float
             cin.sync();
             continue;
         }
-         else {
+        else
             break;
-        }
     }
     return op;
 }
