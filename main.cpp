@@ -438,7 +438,7 @@ int main()
                     menucliente();
                     op = verificaInt();
 
-                    if (op == 6)
+                    if (op == 5)
                         break;
 
                     switch (op)
@@ -583,7 +583,7 @@ int main()
                             << "Informe novamente" << endl;
                     }
                     system("pause");
-                    if (op == 7)
+                    if (op == 5)
                         break;
                 }
                 break;
