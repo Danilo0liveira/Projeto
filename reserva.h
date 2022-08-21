@@ -4,17 +4,19 @@
 class Reserva
 {
 private:
-    int nm_res, nm_acmp, nm_quarto, dias;
+    int nm_res, nm_acmp, nm_quarto, dias; // num. reserva, num. de acompanhantes, num. do quarto, num. de dias
     string nome, tipo_quarto;
-    float montante;
-    //incluir tipo de quarto ?
+    float montante; // Diaria x Quantidade de dias da reserva
 
 public:
-    // constructor
+    //  Constructor
     Reserva(int nm_acmp, int nm_quarto, int dias, string nome, string tipo_quarto);
-    //métodos gets
+
+    //  Métodos set
     void set_nmReserva(int&);
     void set_montante(float montante);
+
+    //  Métodos get
     float getmontante() const;
     int getdias() const;
     int get_nmReserva() const;

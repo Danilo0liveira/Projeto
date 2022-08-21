@@ -8,23 +8,29 @@ Hotel::Hotel()
     float diaria, arcond,TV;
     bool situacao;
 
+    // Abre o arquivo que contém os dados armazenados do hotel, caso exista.
     ifstream arquivo_hotel("propHotel.txt", ios::in);
 
     if(arquivo_hotel.is_open())
     {
+        // Lê o arquivo e carrega os atributos do hotel.
         arquivo_hotel >> this->cont_avaliacoes;
         arquivo_hotel >> this->maxQuartos_andares;
         arquivo_hotel >> this->pessoas;
         arquivo_hotel >> this->ranking;
 
-        while(!arquivo_hotel.eof())
+        while(!arquivo_hotel.eof()) 
         {
+            /* Enquanto não for o fim do arquivo, adiciona no vector quartos_andar um int que indica 
+            a quantidade máxima de quartos em determinado andar */
             arquivo_hotel >> andar;
-            quartos_andar.emplace_back(andar);
+            quartos_andar.emplace_back(andar); /* O tamanho do vector indica o numero de andares no hotel, e cada index do elemento 
+                                                  no vector representa um andar */
 
         }
     }
-    else
+    
+    else // Caso o arquivo não exista, seta os valores do hotel sendo 0
     {
         this->cont_avaliacoes = 0;
         this->maxQuartos_andares = 0;
@@ -32,6 +38,7 @@ Hotel::Hotel()
         this->ranking = 0;
     }
 
+    // Abre o arquivo com dados de todos os quartos padrão, se ele existir
     ifstream arquivo;
     arquivo.open("ListaQuartos.txt", ios::in);
 
@@ -39,9 +46,10 @@ Hotel::Hotel()
     {
         while(!arquivo.eof())
         {
+            // Lê o arquivo e carrega os atributos do Quarto.
             arquivo >> num;
 
-            if (arquivo.eof())
+            if (arquivo.eof())  // Para o programa caso seja o fim do arquivo, necessário para evitar ler uma linha a mais
 				break;
 
             arquivo >> andar;
@@ -50,21 +58,23 @@ Hotel::Hotel()
             arquivo >> diaria;
             arquivo >> situacao;
 
-            Quarto aux(andar, camas, capacidade, diaria, num);
+            Quarto aux(andar, camas, capacidade, diaria, num); // Cria um objeto de Quarto
             aux.setSituacao(situacao);
-            lista_quarto.emplace_back(aux);
+            lista_quarto.emplace_back(aux); // Adiciona o quarto no vector com todos os quartos
         }
         arquivo.close();
     }
 
+    // Abre o arquivo com dados de todos os quartos premium, se ele existir
     ifstream arquivo2("ListaQuartosPremium.txt", ios::in);
 
     if(arquivo2.is_open()){
         while(!arquivo2.eof()){
 
+            // Lê o arquivo e carrega os atributos do Quarto Premium.
             arquivo2 >> num;
 
-            if (arquivo2.eof())
+            if (arquivo2.eof()) // Para o programa caso seja o fim do arquivo, necessário para evitar ler uma linha a mais
 				break;
 
             arquivo2 >> andar;
@@ -78,8 +88,10 @@ Hotel::Hotel()
             arquivo2 >> TV;
             arquivo2 >> serv;
 
-            QuartoPremium aux(andar, camas, capacidade, diaria, num);
+            QuartoPremium aux(andar, camas, capacidade, diaria, num); // Cria um objeto de Quarto Premium
 
+
+            // Configura atributos especializados do Quarto Premium 
             aux.setWifi(wifi);
             aux.setChuvelet(chuveiro);
             aux.setArcond(arcond);
@@ -87,21 +99,23 @@ Hotel::Hotel()
             aux.setServico(serv);
             aux.setSituacao(situacao);
 
-            lista_premium.emplace_back(aux);
+            lista_premium.emplace_back(aux); // Adiciona o quarto no vector com todos os quartos premium
         }
         arquivo2.close();
     }
 
+    // Abre o arquivo com dados de todos os quartos pcd, se ele existir
     ifstream arquivo3("ListaQuartosPcD.txt", ios::in);
-    // arquivo3.open("ListaQuartosPcD.txt", ios::in);
 
     if(arquivo3.is_open())
     {
         while(!arquivo3.eof())
         {
+            // Lê o arquivo e carrega os atributos do Quarto Premium.
+
             getline(arquivo3, tipo);
 
-            if (arquivo3.eof())
+            if (arquivo3.eof()) // Para o programa caso seja o fim do arquivo, necessário para evitar ler uma linha a mais
 				break;
 
             arquivo3 >> num;
@@ -113,27 +127,31 @@ Hotel::Hotel()
             arquivo3 >> serv;
 
 
-            QuartoPcD aux(andar, camas, capacidade, diaria, num, tipo, serv);
+            QuartoPcD aux(andar, camas, capacidade, diaria, num, tipo, serv); // Cria um objeto de Quarto PcD
             aux.setSituacao(situacao);
-            lista_PcD.emplace_back(aux);
+            lista_PcD.emplace_back(aux); // Adiciona o quarto no vector com todos os quartos pcd
 
             arquivo3.ignore();
         }
         arquivo3.close();
     }
 
+
+    // Abre o arquivo com dados de todas reservas, se ele existir
     ifstream arquivo4("ListaReservas.txt", ios::in);
 
     if(arquivo4.is_open())
     {
+        // inicializa as variáveis de montante e dias
         float montante = 0.0;
         int dias = 0;
 
         while(!arquivo4.eof())
         {
+            // Lê o arquivo e carrega os atributos da Reserva.
             getline(arquivo4, nome);
 
-            if (arquivo4.eof())
+            if (arquivo4.eof()) // Para o programa caso seja o fim do arquivo, necessário para evitar ler uma linha a mais
                 break;
 
 
@@ -148,23 +166,24 @@ Hotel::Hotel()
             arquivo4 >> montante;
             arquivo4.ignore();
 
-            Reserva reserva(nm_acmp, num, dias, nome, tipo_quarto);
+            Reserva reserva(nm_acmp, num, dias, nome, tipo_quarto); // Cria um objeto Reserva com os dados carregados
 
+            // Seta atributos mais atributos da reserva
             reserva.set_nmReserva(nm_res);
             reserva.set_montante(montante);
-            lista_reservas.emplace_back(reserva);
+            lista_reservas.emplace_back(reserva); // Adiciona a Reserva carregada na lista de reservas
         }
         arquivo4.close();
     }
 }
 
-// define a quantidade de andares/tamanho do vector dos quartos
+// Define a quantidade de andares/tamanho do vector dos quartos
 void Hotel::setAndares(int& andares)
 {
     quartos_andar.resize(andares);
 }
 
-//Setando o valor maximo de quartos.
+// Setando o valor maximo de quartos.
 void Hotel::setMaxQuartos(int maximo){
     maxQuartos_andares = maximo;
 }
@@ -176,9 +195,10 @@ void Hotel::defRanking(float valor)
     ++cont_avaliacoes;
 }
 
-//Metodos de adicionar os quartos.
-bool Hotel::addQuarto(Quarto& q)
+// Metodos de adicionar os quartos.
+bool Hotel::addQuarto(Quarto& q) // retorna falso se a operação falhou, e true caso a operação foi um sucesso
 {
+    // Verifica em cada lista se existe um quarto com mesmo número
     for (const auto& quarto : lista_quarto)
     {
         if (q.getNumero() == quarto.getNumero())
@@ -195,17 +215,19 @@ bool Hotel::addQuarto(Quarto& q)
             return false;
     }
 
+    // Caso não exista quarto com mesmo número, verifica se o andar inserido foi válido e se o andar não atingiu o máximo de andares
     if(q.getAndar() > quartos_andar.size()-1 || q.getAndar() < 0 || quartos_andar[q.getAndar()] == maxQuartos_andares)
         return false;
 
-    lista_quarto.emplace_back(q);
-    quartos_andar[q.getAndar()]++;
+    lista_quarto.emplace_back(q); // adiciona o quarto na lista de quartos
+    quartos_andar[q.getAndar()]++; // adiciona 1 no número de quartos no determinado andar
 
     return true;
 }
 
-bool Hotel::addPremium(QuartoPremium& q)
+bool Hotel::addPremium(QuartoPremium& q) // retorna falso se a operação falhou, e true caso a operação foi um sucesso
 {
+    // Verifica em cada lista se existe um quarto com mesmo número
     for (const auto& quarto : lista_quarto)
     {
         if (q.getNumero() == quarto.getNumero())
@@ -222,16 +244,19 @@ bool Hotel::addPremium(QuartoPremium& q)
             return false;
     }
 
+    // Caso não exista quarto com mesmo número, verifica se o andar inserido foi válido e se o andar não atingiu o máximo de andares
     if(q.getAndar() > quartos_andar.size()-1 || q.getAndar() < 0 || quartos_andar[q.getAndar()] == maxQuartos_andares)
         return false;
 
-    lista_premium.emplace_back(q);
-    quartos_andar[q.getAndar()]++;
+    lista_premium.emplace_back(q);  // adiciona o quarto na lista de quartos
+    quartos_andar[q.getAndar()]++;  // adiciona 1 no número de quartos no determinado andar
 
     return true;
 }
-bool Hotel::addPcD(QuartoPcD& q)
+
+bool Hotel::addPcD(QuartoPcD& q) // retorna falso se a operação falhou, e true caso a operação foi um sucesso
 {
+    // Verifica em cada lista se existe um quarto com mesmo número
     for (auto& quarto : lista_quarto)
     {
         if (q.getNumero() == quarto.getNumero())
@@ -248,23 +273,25 @@ bool Hotel::addPcD(QuartoPcD& q)
             return false;
     }
 
+    // Caso não exista quarto com mesmo número, verifica se o andar inserido foi válido e se o andar não atingiu o máximo de andares
     if(q.getAndar() > quartos_andar.size()-1 || q.getAndar() < 0 || quartos_andar[q.getAndar()] == maxQuartos_andares)
         return false;
 
-    lista_PcD.emplace_back(q);
-    quartos_andar[q.getAndar()]++;
+    lista_PcD.emplace_back(q);  // adiciona o quarto na lista de quartos
+    quartos_andar[q.getAndar()]++;  // adiciona 1 no número de quartos no determinado andar
 
     return true;
 }
 
+// Verificação se o quarto existe e está desocupado.
 bool Hotel::verificaQuarto(int nm, int tipo)
 {
     if(tipo == 1)
     {
         for(unsigned u = 0; u < lista_quarto.size(); u++)
-            if(lista_quarto[u].getNumero() == nm)
+            if(lista_quarto[u].getNumero() == nm) // Se o caso existir, busca sua situação
             {
-                if(lista_quarto[u].getSituacao())
+                if(lista_quarto[u].getSituacao()) // Se o quarto está ocupado, retorna false
                     return false;
 
                 pesquisaQuarto(nm);
@@ -275,9 +302,9 @@ bool Hotel::verificaQuarto(int nm, int tipo)
     else if(tipo == 2)
     {
         for(unsigned u = 0; u < lista_premium.size(); u++)
-            if(lista_premium[u].getNumero() == nm)
+            if(lista_premium[u].getNumero() == nm) // Se o caso existir, busca sua situação
             {
-                if(lista_premium[u].getSituacao())
+                if(lista_premium[u].getSituacao()) // Se o quarto está ocupado, retorna false
                     return false;
 
                 pesquisaQuarto(nm);
@@ -288,9 +315,9 @@ bool Hotel::verificaQuarto(int nm, int tipo)
     else if(tipo == 3)
     {
         for(unsigned u = 0; u < lista_PcD.size(); u++)
-            if(lista_PcD[u].getNumero() == nm)
+            if(lista_PcD[u].getNumero() == nm) // Se o caso existir, busca sua situação
             {
-                if(lista_PcD[u].getSituacao())
+                if(lista_PcD[u].getSituacao()) // Se o quarto está ocupado, retorna false
                     return false;
 
                 pesquisaQuarto(nm);
@@ -298,13 +325,17 @@ bool Hotel::verificaQuarto(int nm, int tipo)
             }
     }
 
-    return false;
+    return false; // Retorna false caso o quarto nao exista
 }
 
+// Metodos de modificar os Quartos
 bool Hotel::modificaQuarto(int nm, int atrib)
 {
+    // se atrib = 1 -> modifica a diaria; atrib = 2 -> modifica o numero de camas; atrib = 3 -> modifica a capacidade do quarto.
     switch(atrib)
     {
+
+        // Modifica a diaria
         case 1:
         {
             float diaria;
@@ -328,6 +359,8 @@ bool Hotel::modificaQuarto(int nm, int atrib)
                 }
             break;
         }
+
+        // Modifica a quantidade de camas
         case 2:
         {
             int camas;
@@ -351,6 +384,8 @@ bool Hotel::modificaQuarto(int nm, int atrib)
                 }
             break;
         }
+
+        // Modifica a capacidade do quarto
         case 3:
         {
             int capacidade;
@@ -380,8 +415,12 @@ bool Hotel::modificaQuarto(int nm, int atrib)
 
 bool Hotel::modificaQuarto_premium(int nm, int atrib)
 {
+    /* se atrib = 1 -> modifica a diaria; atrib = 2 -> modifica o numero de camas; atrib = 3 -> modifica a capacidade do quarto.
+          atrib = 4 -> modifica o wifi; atrib = 5 -> modifica a quantidade de chuveiros; atrib = 6 -> modifica o serviço de quarto
+          atrib = 7 -> modifica o ar condicionado; atrib = 8 -> modifica as polegadas da tv.  */
     switch(atrib)
     {
+        // Modifica a diaria
         case 1:
         {
             float diaria;
@@ -405,6 +444,8 @@ bool Hotel::modificaQuarto_premium(int nm, int atrib)
                 }
             break;
         }
+        
+        // Modifica a quantidade de camas
         case 2:
         {
             int camas;
@@ -428,6 +469,8 @@ bool Hotel::modificaQuarto_premium(int nm, int atrib)
                 }
             break;
         }
+
+        // Modifica a capacidade do quarto
         case 3:
         {
             int capacidade;
@@ -451,6 +494,8 @@ bool Hotel::modificaQuarto_premium(int nm, int atrib)
                 }
             break;
         }
+
+        // Modifica o wif
         case 4:
         {
             int wifi;
@@ -474,6 +519,8 @@ bool Hotel::modificaQuarto_premium(int nm, int atrib)
                 }
             break;
         }
+
+        // Modifica a quantidade de chuveiros elétricos
         case 5:
         {
             int chuveiros;
@@ -497,6 +544,8 @@ bool Hotel::modificaQuarto_premium(int nm, int atrib)
                 }
             break;
         }
+
+        // Modifica o serviço de quarto
         case 6:
         {
             int servQuarto;
@@ -520,6 +569,8 @@ bool Hotel::modificaQuarto_premium(int nm, int atrib)
                 }
             break;
         }
+
+        // Modifica os BTUs do ar condicionado
         case 7:
         {
             float arcond;
@@ -543,6 +594,8 @@ bool Hotel::modificaQuarto_premium(int nm, int atrib)
                 }
             break;
         }
+
+        // Modifica as polegadas da tv
         case 8:
         {
             float tv;
@@ -572,8 +625,11 @@ bool Hotel::modificaQuarto_premium(int nm, int atrib)
 
 bool Hotel::modificaQuarto_PcD(int nm, int atrib)
 {
+    /* se atrib = 1 -> modifica a diaria; atrib = 2 -> modifica o numero de camas; atrib = 3 -> modifica a capacidade do quarto.
+          atrib = 4 -> modifica o tipo de adaptacao; atrib = 5 -> modifica a serviço de quarto.*/
     switch(atrib)
     {
+        // Modifica a diaria
         case 1:
         {
             float diaria;
@@ -597,6 +653,8 @@ bool Hotel::modificaQuarto_PcD(int nm, int atrib)
                 }
             break;
         }
+
+        // Modifica a quantidade de camas
         case 2:
         {
             int camas;
@@ -620,6 +678,8 @@ bool Hotel::modificaQuarto_PcD(int nm, int atrib)
                 }
             break;
         }
+
+        // Modifica a capacidade do quarto
         case 3:
         {
             int capacidade;
@@ -643,6 +703,8 @@ bool Hotel::modificaQuarto_PcD(int nm, int atrib)
                 }
             break;
         }
+
+        // Modifica o tipo de adaptação do quarto
         case 4:
         {
             string tipoAdaptacao;
@@ -661,6 +723,8 @@ bool Hotel::modificaQuarto_PcD(int nm, int atrib)
             break;
 
         }
+
+        // Modifica o serviço de quarto
         case 5:
         {
             int servQuarto;
@@ -689,8 +753,11 @@ bool Hotel::modificaQuarto_PcD(int nm, int atrib)
     return false;
 }
 
-bool Hotel::rmv_quarto(const int& num_quarto, int tipo)
+// Metodo de remover quarto, possível apenas se o quarto existir e não estiver ocupado
+bool Hotel::rmv_quarto(const int& num_quarto, int tipo) // retorna true caso a operação seja um sucesso, caso contrário, retorna false
 {
+
+    // Quarto Padrão
     if (tipo == 1)
     {
         for (unsigned i = 0; i < lista_quarto.size(); ++i)
@@ -705,6 +772,8 @@ bool Hotel::rmv_quarto(const int& num_quarto, int tipo)
             }
         }
     }
+
+    // Quarto Premium
     else if (tipo == 2)
     {
         for (unsigned i = 0; i < lista_premium.size(); ++i)
@@ -718,6 +787,8 @@ bool Hotel::rmv_quarto(const int& num_quarto, int tipo)
             }
         }
     }
+
+    // Quarto PcD
     else
     {
         for (unsigned i = 0; i < lista_PcD.size(); ++i)
@@ -734,32 +805,34 @@ bool Hotel::rmv_quarto(const int& num_quarto, int tipo)
     return false;
 }
 
+// Metodo para adicionar reserva no hotel
 bool Hotel::addReserva(Reserva& r)
 {
+    // Gera número aleatório para reserva
     int nm_res = 66666 + (rand() % 6666) + (rand() % 6666);
 
     while(1)
     {
-        bool aux = false;
+        bool aux = false; // booleano usado pra sair do loop
 
         for(const auto& reserva : lista_reservas)
         {
-            if(r.get_nmquarto() == reserva.get_nmquarto())
+            if(r.get_nmquarto() == reserva.get_nmquarto()) // verifica se o quarto ja foi reservado
                 return false;
 
-            if (nm_res == reserva.get_nmReserva())
+            if (nm_res == reserva.get_nmReserva()) // verifica se o número de reserva já existe
             {
                 while(nm_res == reserva.get_nmReserva())
-                    nm_res = 66666 + (rand() % 6666) + (rand() % 6666);
+                    nm_res = 66666 + (rand() % 6666) + (rand() % 6666); // cria um novo numero de reserva caso já exista
                 aux = true;
             }
         }
-        if(!aux)
+        if(!aux) // aux só é false quando todas as verificações acima ocorrerem com sucesso, logo, !aux -> true
             break;
     }
-    r.set_nmReserva(nm_res);
+    r.set_nmReserva(nm_res); // seta o numero da reserva no objeto Reserva
 
-    // mudando a situação do quarto
+    // Mudando a situação do Quarto
     if(r.get_tipoQuarto() == "Quarto")
     {
         for(unsigned u = 0; u < lista_quarto.size(); u++){
@@ -770,15 +843,17 @@ bool Hotel::addReserva(Reserva& r)
 
                 lista_quarto[u].setSituacao(true);
 
-                r.set_montante(r.getdias() * lista_quarto[u].getDiaria());
-                lista_reservas.emplace_back(r);
+                r.set_montante(r.getdias() * lista_quarto[u].getDiaria()); // calcula o montante da reserva
+                lista_reservas.emplace_back(r); // adiciona a reserva na lista de reserva
 
-                this->pessoas += r.get_nmAc();
+                this->pessoas += r.get_nmAc(); // aumenta o número de pessoas no hotel
 
                 return true;
             }
         }
     }
+
+    // Muda a situação do quarto Premium
     else if(r.get_tipoQuarto() == "Quarto Premium")
     {
         for(unsigned u = 0; u < lista_premium.size(); u++){
@@ -789,15 +864,17 @@ bool Hotel::addReserva(Reserva& r)
 
                 lista_premium[u].setSituacao(true);
 
-                r.set_montante(r.getdias() * lista_premium[u].getDiaria());
-                lista_reservas.emplace_back(r);
+                r.set_montante(r.getdias() * lista_premium[u].getDiaria()); // calcula o montante da reserva
+                lista_reservas.emplace_back(r); // adiciona a reserva na lista de reserva
 
-                this->pessoas += r.get_nmAc();
+                this->pessoas += r.get_nmAc(); // aumenta o número de pessoas no hotel
 
                 return true;
             }
         }
     }
+
+    // Mudando a situação do Quarto PcD
     else
     {
         for(unsigned u = 0; u < lista_PcD.size(); u++){
@@ -808,10 +885,10 @@ bool Hotel::addReserva(Reserva& r)
 
                 lista_PcD[u].setSituacao(true);
 
-                r.set_montante(r.getdias() * lista_premium[u].getDiaria());
-                lista_reservas.emplace_back(r);
+                r.set_montante(r.getdias() * lista_premium[u].getDiaria()); // calcula o montante da reserva
+                lista_reservas.emplace_back(r); // adiciona a reserva na lista de reserva
 
-                this->pessoas += r.get_nmAc();
+                this->pessoas += r.get_nmAc(); // aumenta o número de pessoas no hotel
 
                 return true;
             }
@@ -820,13 +897,14 @@ bool Hotel::addReserva(Reserva& r)
     return false;
 }
 
+// Retorna o montante da reserva pesquisada
 float Hotel::pesquisaMontante(int nm_reserva)
 {
     for(unsigned u = 0; u < lista_reservas.size(); u++)
-        if(nm_reserva == lista_reservas[u].get_nmReserva())
-            return lista_reservas[u].getmontante();
+        if(nm_reserva == lista_reservas[u].get_nmReserva()) // Busca a reserva passad 
+            return lista_reservas[u].getmontante(); // Retorna o montante da reserva
 
-    return 0.0;
+    return 0.0; // Caso nao encontrado a reserva, retorna 0 de montante
 }
 
 //Metodo para remover a reserva.
@@ -839,39 +917,42 @@ bool Hotel::removerReserva(int numero_res)
             int numero_quarto = lista_reservas[i].get_nmquarto();
             string tipo_quarto = lista_reservas[i].get_tipoQuarto();
 
-            pessoas -= lista_reservas[i].get_nmAc();
+            pessoas -= lista_reservas[i].get_nmAc(); // Diminui o número de pessoas no Hotel
 
-            lista_reservas.erase(lista_reservas.begin() + i);
+            lista_reservas.erase(lista_reservas.begin() + i); // Apaga a reserva da lista
 
+            // Muda a situação do Quarto, se reservado
             if (tipo_quarto == "Quarto")
             {
                 for (unsigned u = 0; u < lista_quarto.size(); ++u)
                 {
                     if (numero_quarto == lista_quarto[u].getNumero())
                     {
-                        lista_quarto[u].setSituacao(false);
+                        lista_quarto[u].setSituacao(false); // seta a situação do quarto para false (desocupado)
                         return true;
                     }
                 }
             }
+            // Muda a situação do Quarto Premium, se reservado
             else if (tipo_quarto == "Quarto Premium")
             {
                 for (unsigned u = 0; u < lista_premium.size(); ++u)
                 {
                     if (numero_quarto == lista_premium[u].getNumero())
                     {
-                        lista_premium[u].setSituacao(false);
+                        lista_premium[u].setSituacao(false); // seta a situação do quarto para false (desocupado)
                         return true;
                     }
                 }
             }
+            // Muda a situação do Quarto PcD, se reservado
             else
             {
                 for (unsigned u = 0; u < lista_PcD.size(); ++u)
                 {
                     if (numero_quarto == lista_PcD[u].getNumero())
                     {
-                        lista_PcD[u].setSituacao(false);
+                        lista_PcD[u].setSituacao(false); // seta a situação do quarto para false (desocupado)
                         return true;
                     }
                 }
@@ -890,6 +971,7 @@ void Hotel::printQuartos() const
         cout << "Nao ha quartos no hotel!" << endl;
     else
     {
+        // Printa Quartos Padrão
         cout << "Quarto padrão" << endl;
         cout << setfill('=') << setw(41) << "=" << endl;
 
@@ -912,6 +994,7 @@ void Hotel::printQuartos() const
 
         system("cls");
 
+        // Printa Quartos Premium
         cout << "Quarto Premium" << endl;
         cout << setfill('=') << setw(41) << "=" << endl;
 
@@ -937,6 +1020,7 @@ void Hotel::printQuartos() const
 
         system("cls");
 
+        // Printa Quartos PcD
         cout << "Quarto PcD" << endl;
         cout << setfill('=') << setw(41) << "=" << endl;
 
@@ -959,14 +1043,15 @@ void Hotel::printQuartos() const
 //Exibir apenas os quartos desocupados.
 void Hotel::printQuarDesocupados() const
 {
-    if(lista_PcD.empty() && lista_quarto.empty() && lista_premium.empty())
+    if(lista_PcD.empty() && lista_quarto.empty() && lista_premium.empty()) // Verifica se há quartos no hotel
         cout << "Não há quartos no hotel!" << endl;
-    else if(lista_PcD.size() + lista_quarto.size() + lista_premium.size() == lista_reservas.size())
+    else if(lista_PcD.size() + lista_quarto.size() + lista_premium.size() == lista_reservas.size()) // Verifica se há quartos desocupados no hotel
         cout << "Não há quartos disponíveis" << endl;
     else
     {
         bool cont_1 = true, cont_2 = true;
 
+        // Printa Quartos Padrão Desocupados
         cout << "Quarto Padrão" << endl;
         cout << setfill('=') << setw(41) << "=" << endl;
 
@@ -988,6 +1073,7 @@ void Hotel::printQuarDesocupados() const
 
         system("cls");
 
+        // Printa Quartos Premium Desocupados
         cout << "Quarto Premium" << endl;
         cout << setfill('=') << setw(41) << "=" << endl;
 
@@ -1013,6 +1099,7 @@ void Hotel::printQuarDesocupados() const
 
         system("cls");
 
+        // Printa Quartos PcD Desocupados
         cout << "Quarto PcD" << endl;
         cout << setfill('=') << setw(41) << "=" << endl;
 
@@ -1033,14 +1120,15 @@ void Hotel::printQuarDesocupados() const
 // Exibir apenas os quartos ocupados.
 void Hotel::printQuarOcupados() const
 {
-    if(lista_PcD.empty() && lista_quarto.empty() && lista_premium.empty())
+    if(lista_PcD.empty() && lista_quarto.empty() && lista_premium.empty()) // Verifica se há quartos no hotel
         cout << "Não há quartos no hotel!" << endl;
-    else if(lista_reservas.empty())
+    else if(lista_reservas.empty()) // Verifica se a lista de reservas está vazia
         cout << "Não há quartos reservados" << endl;
     else
     {
         bool cont_1, cont_2;
 
+        // Printa Quartos Padrão Ocupados
         cout << "Quarto Padrão" << endl;
         cout << setfill('=') << setw(41) << "=" << endl;
 
@@ -1062,6 +1150,7 @@ void Hotel::printQuarOcupados() const
 
         system("cls");
 
+        // Printa Quartos Premium Ocupados
         cout << "Quarto Premium" << endl;
         cout << setfill('=') << setw(41) << "=" << endl;
 
@@ -1087,6 +1176,7 @@ void Hotel::printQuarOcupados() const
 
         system("cls");
 
+        // Printa Quartos PcD Ocupados
         cout << "Quarto PcD" << endl;
         cout << setfill('=') << setw(41) << "=" << endl;
 
@@ -1104,11 +1194,13 @@ void Hotel::printQuarOcupados() const
     }
 }
 
+// Exibe as reservas
 void Hotel::printReservas() const
 {
-    if(lista_reservas.empty())
+    if(lista_reservas.empty()) // Verifica se a lista de reservas está vazia
         cout << "Lista esta vazia!" << endl;
 
+    // Printa as reservas
     for(const auto& res : lista_reservas)
     {
         cout << "Numero da reserva: " << res.get_nmReserva()
@@ -1124,6 +1216,7 @@ void Hotel::printReservas() const
 //Pesquisa um dos quartos. //adicionar tipo do quarto a ser pesquisado!
 bool Hotel::pesquisaQuarto(int numero) const
 {
+    // Pesquisa por quarto padrão e printa o quarto, se encontrado
     for(unsigned u = 0; u < lista_quarto.size(); u++){
         if(numero == lista_quarto[u].getNumero()){
             cout << "Quarto padrão" << endl << "Numero: " << lista_quarto[u].getNumero()
@@ -1141,6 +1234,7 @@ bool Hotel::pesquisaQuarto(int numero) const
         }
     }
 
+    // Pesquisa por quarto premium e printa o quarto, se encontrado
     for(unsigned u = 0; u < lista_premium.size(); u++){
         if(numero == lista_premium[u].getNumero()){
             cout << "Quarto premium" << endl << "Numero: " << lista_premium[u].getNumero()
@@ -1162,6 +1256,7 @@ bool Hotel::pesquisaQuarto(int numero) const
 
     }
 
+    // Pesquisa por quarto pcd e printa o quarto, se encontrado
     for(unsigned u = 0; u < lista_PcD.size(); u++){
         if(numero == lista_PcD[u].getNumero())
         {
@@ -1185,37 +1280,40 @@ bool Hotel::pesquisaQuarto(int numero) const
     return false;
 }
 
+// Retorna o ranking do hotel
 float Hotel::getRanking() const
 {
     return ranking / cont_avaliacoes;
 }
 
-//Retorna o numero de andares.
+// Retorna o numero de andares.
 int Hotel::getAndares() const
 {
     return quartos_andar.size();
 }
 
+// Retorna o contador de avaliações do hotel
 int Hotel::get_contAva() const
 {
     return cont_avaliacoes;
 }
 
-//Retornando o numero de pessoas.
+// Retornando o numero de pessoas.
 int Hotel::getPessoas() const
 {
     return pessoas;
 }
 
-//Retornando o numero maximo de quartos.
+// Retornando o numero maximo de quartos.
 int Hotel::getMaxQuartos() const
 {
     return maxQuartos_andares;
 }
 
-//Gravando as listas num arquivo.
+// Gravando as listas num arquivo.
 void Hotel::gravaListas(){
 
+    //Abre o arquivo dos quartos padrão para gravar dados nele
     ofstream arquivo("ListaQuartos.txt", ios::trunc);
 
     if(arquivo.is_open())
@@ -1232,6 +1330,7 @@ void Hotel::gravaListas(){
         arquivo.close();
     }
 
+    //Abre o arquivo dos quartos premium para gravar dados nele
     ofstream arquivo2;
     arquivo2.open("ListaQuartosPremium.txt", ios::trunc);
 
@@ -1252,6 +1351,7 @@ void Hotel::gravaListas(){
         arquivo2.close();
     }
 
+    //Abre o arquivo dos quartos pcd para gravar dados nele
     ofstream arquivo3("ListaQuartosPcD.txt", ios::trunc);
 
     if(arquivo3.is_open())
@@ -1270,6 +1370,7 @@ void Hotel::gravaListas(){
         arquivo3.close();
     }
 
+    //Abre o arquivo das reservas para gravar dados nele
     ofstream arquivo4("ListaReservas.txt", ios::trunc);
 
     if(arquivo4.is_open())
@@ -1288,6 +1389,7 @@ void Hotel::gravaListas(){
         arquivo4.close();
     }
 
+    //Abre o arquivo do Hotel para gravar dados nele
     ofstream arquivo_hotel("propHotel.txt");
 
     if(arquivo_hotel.is_open())

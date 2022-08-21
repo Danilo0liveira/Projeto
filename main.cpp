@@ -3,21 +3,25 @@
 #include <string>
 #include <vector>
 #include <fstream>
-#include <ctime>
-#include <clocale>
-#include <sstream>
+#include <ctime> // usando em função srand 
+#include <clocale> // usado para usar caracteres da lingua portuguesa
+#include <sstream> // usado para stringstream
 
 using namespace std;
 
-int verificaInt();
-float verificaFloat();
+// Função para verificação de resposta do usuário
+int verificaInt(); // garante que o usuário envia um int como input
+float verificaFloat();  // garante que o usuário envia um float como input
 
+
+// Inclusão de classes
 #include "quarto.cpp"
 #include "QuartoPcD.cpp"
 #include "quartopremium.cpp"
 #include "reserva.cpp"
 #include "hotel.cpp"
 
+// Protótipo de funções de menu
 void menufuncionario();
 void menucliente();
 void menuquartos();
@@ -25,17 +29,24 @@ void menuinicial(Hotel&);
 
 int main()
 {
+
+    // função relacionada à geração randômica de números de reservas
     srand((unsigned) time(0));
+
+    // Permite o uso de caracteres da língua portuguesa 
     setlocale(LC_ALL, "portuguese");
 
+    // Cria o objeto Hotel
     Hotel hotel;
 
-    if(!hotel.getAndares())
+    if(!hotel.getAndares()) // Se o hotel não tiver andares, não foi inicializado ainda.
     {
+        // Começa o processo de configuração do Hotel
         int andares, maxQuartos_andares;
 
         cout << "Primeira vez aqui ?\nDefina as propriedades do hotel" << endl;
 
+        // Configura atributos do hotel
         while(1)
         {
 
@@ -45,7 +56,7 @@ int main()
             cout << "Defina a quantidade máxima de quartos por andar: ";
             maxQuartos_andares = verificaInt();
 
-            if(andares > 0 && maxQuartos_andares > 0)
+            if(andares > 0 && maxQuartos_andares > 0) // Verifica se dados passados fazem sentido
                 break;
 
             cout << "Dado(s) inválido(s), informe novamente!" << endl;
@@ -55,6 +66,7 @@ int main()
         }
         system("cls");
 
+        // Termina a configuração do Hotel setando os dados
         hotel.setMaxQuartos(maxQuartos_andares);
         hotel.setAndares(andares);
 
@@ -63,8 +75,8 @@ int main()
 
     while(1)
     {
-        menuinicial(hotel);
-        cin >> op;
+        menuinicial(hotel); // Função que printa o menu inicial do Hotel
+        op = verificaInt();
 
         switch(op)
         {
@@ -75,6 +87,7 @@ int main()
             {
                 while(1)
                 {
+                    // Verifica a senha do funcionário
                     string senha;
 
                     system("cls");
@@ -88,21 +101,25 @@ int main()
                         cout << "Senha incorreta!\n" << endl;
                     else
                     {
+                        // Entra no menu do funcionário
                         unsigned op;
                         while(1)
                         {
                             system("cls");
 
-                            menufuncionario();
+                            menufuncionario(); // Função que printa o menu do funcionário
                             op = verificaInt();
 
-                            if (op == 9)
+                            if (op == 9) // Caso 9 -> Retornar ao menu do Hotel
                                 break;
 
                             switch(op)
                             {
+                                // Caso 0 -> Encerra o programa
                                 case 0:
                                     return 0;
+
+                                // Caso 1 -> Adicionar Quartos
                                 case 1:
                                 {
                                     unsigned op = 0;
@@ -110,16 +127,17 @@ int main()
                                     system("cls");
 
                                     cout << "Escolha um tipo de quarto para adicionar" << endl;
-                                    menuquartos();
+                                    menuquartos(); // Função que printa o menu de tipos de quartos
                                     op = verificaInt();
                                     cout << setfill('-') << setw(41) << "-" << endl;
 
-                                    if(op < 1 || op > 3)
+                                    if(op < 1 || op > 3) // Verifica se uma opcão válida foi inserida
                                     {
                                         cout << "Opcao invalida" << endl;
                                         break;
                                     }
 
+                                    // Inicializa variáveis do quarto
                                     int andar, numero, camas, capacidade;
                                     float diaria;
 
@@ -140,6 +158,7 @@ int main()
                                         cout << "Digite a diária: ";
                                         diaria = verificaFloat();
 
+                                        // Verifica se os dados inseridos são válidos
                                         if(andar >= 0 && numero > 0 && capacidade > 0 && camas > 0 && diaria > 0)
                                             break;
 
@@ -147,6 +166,7 @@ int main()
                                     }
                                     switch(op)
                                     {
+                                        // Inserir Quarto Padrão
                                         case 1:
                                         {
                                             Quarto quarto(andar, camas, capacidade, diaria, numero);
@@ -158,6 +178,8 @@ int main()
                                             cout << "Sucesso!" << endl;
                                             break;
                                         }
+
+                                        // Inserir Quarto Premium
                                         case 2:
                                         {
                                             int wifi, chuv, servico;
@@ -177,6 +199,7 @@ int main()
                                                 cout << "Digite a quantidade de funcionários:  ";
                                                 servico = verificaInt();
 
+                                                // Verifica se os dados inseridos são válidos
                                                 if(wifi > 0 && chuv > 0 && arcond > 0 && TV > 0 && servico > 0)
                                                     break;
 
@@ -201,6 +224,8 @@ int main()
 
                                             break;
                                         }
+
+                                        // Inserir Quarto PcD
                                         case 3:
                                         {
                                             int qnt;
@@ -235,8 +260,11 @@ int main()
                                     }
                                     break;
                                 }
+
+                                // Caso 2 -> Remover Quarto
                                 case 2:
                                 {
+                                    // Inicializa variáveis necessárias para identificar quarto a ser removido
                                     int tipo, numero;
 
                                     system("cls");
@@ -246,6 +274,7 @@ int main()
                                     menuquartos();
                                     tipo = verificaInt();
 
+                                    // Verifica se os dados inseridos são válidos
                                     if(op < 1 || op > 3)
                                     {
                                         cout << "Opcao invalida" << endl;
@@ -256,6 +285,7 @@ int main()
                                     numero = verificaInt();
 
 
+                                    // Verifica e comunica que remoção de quarto foi um sucesso ou não
                                     if (!hotel.rmv_quarto(numero, tipo))
                                     {
                                         cout << "Não foi possível remover o quarto!" << endl;
@@ -264,8 +294,11 @@ int main()
                                     cout << "Sucesso!" << endl;
                                     break;
                                 }
+                                
+                                // Caso 3 -> Remover reserva
                                 case 3:
                                 {
+                                    // Inicializa variável necessária para remoção de reserva
                                     int numero;
 
                                     system("cls");
@@ -275,6 +308,7 @@ int main()
                                     cout << "Informe o número da reserva: " << endl;
                                     numero = verificaInt();
 
+                                    // Verifica e comunica se remoção de reserva foi um sucesso ou não
                                     if(!hotel.removerReserva(numero))
                                     {
                                         cout << "Não foi possível encontrar a reserva!" << endl;
@@ -284,30 +318,39 @@ int main()
                                     cout << "Sucesso!" << endl;
                                     break;
                                 }
+
+                                // Caso 4 -> Printar lista de quartos
                                 case 4:
                                 {
                                     system("cls");
-                                    hotel.printQuartos();
+                                    hotel.printQuartos(); // Função que retorna a lista completa de quartos
                                     break;
                                 }
+
+                                // Caso 5 -> Printar lista de quartos ocupados
                                 case 5:
                                 {
                                     system("cls");
                                     cout << "Quartos ocupados" << endl;
                                     cout << setfill('=') << setw(41) << "=" << endl;
-                                    hotel.printQuarOcupados();
+                                    hotel.printQuarOcupados(); // Função que retorna a lista completa de quartos ocupados
                                     break;
                                 }
+
+                                // Caso 6 -> Printar lista de reservas
                                 case 6:
                                 {
                                     system("cls");
                                     cout << "Lista de reservas" << endl;
                                     cout << setfill('=') << setw(41) << "=" << endl;
-                                    hotel.printReservas();
+                                    hotel.printReservas(); // Função que retorna a lista completa de reservas
                                     break;
                                 }
+
+                                // Caso -> Pesquisar quarto 
                                 case 7:
                                 {
+                                    // Inicializa variável necessária para encontrar quarto
                                     int numero;
 
                                     system("cls");
@@ -317,11 +360,14 @@ int main()
                                     cout << "Digite o numero do quarto a ser pesquisado: ";
                                     numero = verificaInt();
 
-                                    hotel.pesquisaQuarto(numero);
+                                    hotel.pesquisaQuarto(numero); // Printa na tela o quarto pesquisado
                                     break;
                                 }
+
+                                // Caso 8 -> Modificar quarto
                                 case 8:
                                 {
+                                    // Inicializa variáveis necessárias para encontrar quarto a ser modificado
                                     int nm, tipo;
                                     int atrib;
 
@@ -333,6 +379,7 @@ int main()
 
                                     cout << setfill('-') << setw(41) << "-" << endl;
 
+                                    // Verifica se os dados inseridos são válidos
                                     if(tipo < 1 || tipo > 3)
                                     {
                                         cout << "Opcao invalida" << endl;
@@ -342,24 +389,28 @@ int main()
                                     cout << "Digite o numero do quarto a ser modificado: ";
                                     nm = verificaInt();
 
+                                    // Verifica se o quarto não foi encontrado ou se está ocupado
                                     if(!hotel.verificaQuarto(nm, tipo))
                                     {
                                         cout << "Quarto ocupado ou não encontrado!" << endl;
                                         break;
                                     }
 
+                                    // Modifica Quarto Padrão
                                     if(tipo == 1)
                                     {
                                         cout <<"Digite qual atributo voce deseja modificar:" << endl
                                         << "1 - diaria" << endl << "2 - camas" << endl << "3 - capacidade" << endl;
                                         atrib = verificaInt();
 
+                                        // Verifica se os dados inseridos são válidos
                                         if(atrib < 1 || atrib > 4)
                                         {
                                             cout << "Numero inválido" << endl;
                                             break;
                                         }
 
+                                        // Verifica e comunica se a modificação foi realizada com sucesso ou não
                                         if(!hotel.modificaQuarto(nm,atrib))
                                         {
                                             cout << "Modificação não realizada" << endl;
@@ -370,6 +421,7 @@ int main()
                                         break;
                                     }
 
+                                    // Modifica Quarto Premium
                                     if(tipo == 2)
                                     {
                                         cout <<"Digite qual atributo voce deseja modificar:" << endl
@@ -378,12 +430,14 @@ int main()
                                         << endl << "7 - potencia do arcondicionado" << endl << "8 - polegadas de televisão" << endl;
                                         atrib = verificaInt();
 
+                                        // Verifica se os dados inseridos são válidos
                                         if(atrib < 1 || atrib > 8)
                                         {
                                             cout << "Numero inválido" << endl;
                                             break;
                                         }
 
+                                        // Verifica e comunica se a modificação foi realizada com sucesso ou não
                                         if(!hotel.modificaQuarto_premium(nm,atrib))
                                         {
                                             cout << "Modificação não realizada" << endl;
@@ -394,6 +448,7 @@ int main()
                                         break;
                                     }
 
+                                    // Modifica Quarto PcD
                                     if(tipo == 3)
                                     {
                                         cout <<"Digite qual atributo voce deseja modificar:" << endl
@@ -401,12 +456,14 @@ int main()
                                         << "4 - Tipo de Adaptação" << endl << "5 - Funcionarios no serviço de quarto" << endl;
                                         atrib = verificaInt();
 
+                                        // Verifica se os dados inseridos são válidos
                                         if(atrib < 1 || atrib > 5)
                                         {
                                             cout << "Numero inválido" << endl;
                                             break;
                                         }
 
+                                        // Verifica e comunica se a modificação foi realizada com sucesso ou não
                                         if(!hotel.modificaQuarto_PcD(nm,atrib))
                                         {
                                             cout << "Modificação não realizada" << endl;
@@ -417,6 +474,8 @@ int main()
                                         break;
                                     }
                                 }
+
+                                // Opção inválida
                                 default:
                                     cout << "Opção inválida" << endl;
                             }
@@ -437,14 +496,18 @@ int main()
                     system("cls");
                     unsigned op;
 
+                    // Printa o menu do cliente
                     menucliente();
                     op = verificaInt();
 
+                    // Caso 5 -> Retorna ao menu do Hotel
                     if (op == 5)
                         break;
 
                     switch (op)
                     {
+                    
+                    // Caso 0 -> Encerra o programa
                     case 0:
                         return 0;
 
@@ -471,6 +534,7 @@ int main()
                             cout << "Digite o número de dias: ";
                             dias = verificaInt();
 
+                            // Verifica se as entradas foram válidas
                             if(acompanhantes > 0 && num_quarto > 0 && dias > 0)
                                 break;
 
@@ -482,6 +546,7 @@ int main()
                         getline(cin >> ws, nome);
 
                         cout << "Digite o tipo de quarto " << endl;
+                        // Printa o menu de tipos de quartos a serem escolhidos
                         menuquartos();
                         op = verificaInt();
 
@@ -543,6 +608,7 @@ int main()
                         cout << ">> ";
                         cin >> avaliacao;
 
+                        // Verifica se as entradas foram válidas
                         while ((avaliacao < 0 || avaliacao > 5))
                         {
                             cout << "Dado(s) inválido(s), por favor inserir novamente >> ";
@@ -562,7 +628,7 @@ int main()
                     {
                         system("cls");
 
-                        hotel.printQuarDesocupados();
+                        hotel.printQuarDesocupados(); // Printa os quartos disponíveis para reserva
                         break;
                     }
                     case 4: // Pesquisar quarto
@@ -577,7 +643,7 @@ int main()
                         cout << "Digite o numero do quarto a ser pesquisado: ";
                         numero = verificaInt();
 
-                        hotel.pesquisaQuarto(numero);
+                        hotel.pesquisaQuarto(numero); // Pesquisa um quarto específico
                         break;
                     }
                     default:
@@ -585,7 +651,7 @@ int main()
                             << "Informe novamente" << endl;
                     }
                     system("pause");
-                    if (op == 5)
+                    if (op == 5) // Retorna ao menu do hotel (principal)
                         break;
                 }
                 break;
@@ -601,8 +667,9 @@ int main()
     return 0;
 }
 
-void menuinicial(Hotel& hotel)
+void menuinicial(Hotel& hotel) // Função que printa o menu inicial do Hotel
 {
+    // stream de string que terá a avaliação total do hotel
     stringstream strstream;
 
     system("cls");
@@ -612,6 +679,7 @@ void menuinicial(Hotel& hotel)
     else
         strstream << hotel.getRanking();
 
+    // Apresentação do Hotel com formatação
     cout << setfill('=') << setw(41) << "=" << endl;
     cout << setfill(' ') << setw(16) << " " << "Bem-vindo" << endl;
     cout << setfill(' ') << setw(14) << " " << "Hotel OgaVirt" << endl;
@@ -624,6 +692,7 @@ void menuinicial(Hotel& hotel)
     cout << setfill(' ') << setw(14) << " " << "Hóspedes:  " << hotel.getPessoas() << endl;
     cout << setfill('=') << setw(41) << "=" << endl;
 
+    // Menu de opções
     cout << "Entrar como:" << endl
         << "(1) Funcionário" << endl
         << "(2) Cliente" << endl
@@ -631,7 +700,7 @@ void menuinicial(Hotel& hotel)
         << ">> ";
 }
 
-void menufuncionario()
+void menufuncionario() // Função que printa o menu do funcionário
 {
     cout << setfill('=') << setw(41) << "=" << endl;
     cout << setfill(' ') << setw(12) << " " << "Menu funcionário" << endl;
@@ -649,7 +718,7 @@ void menufuncionario()
          << ">> ";
 }
 
-void menucliente()
+void menucliente() // Função que printa o menu do cliente
 {
     cout << setfill('=') << setw(41) << "=" << endl;
     cout << setfill(' ') << setw(15) << " " << "Menu cliente"<< endl;
@@ -663,7 +732,7 @@ void menucliente()
         << ">> ";
 }
 
-void menuquartos()
+void menuquartos() // Função que printa o menu de escolha de tipo de quartos
 {
     cout << setfill('-') << setw(41) << "-" << endl;
     cout << "(1) Quarto Padrão" << endl
@@ -680,15 +749,15 @@ int verificaInt(){ // verifica se um número é int
         if(cin.fail()){ // verifica se houve algum erro no cin. exemplo: inserir um 'a' no lugar de um número
             cout << "Opcao invalida! Por favor, insira uma opcao certa" << endl
             << ">> ";
-            cin.clear();
+            cin.clear(); // limpa o buffer
             cin.sync();
-            continue;
+            continue; // continua o programa
         } else if(ch != '\n' && ch != ' '){ // verifica se há algum caracter junto ao numero, tornando-o inválido. exemplo: 12asd
             cout << "Opcao invalida! Por favor, insira uma opcao certa" << endl
             << ">> ";
-            cin.clear();
+            cin.clear(); // limpa o buffer
             cin.sync();
-            continue;
+            continue; // continua o programa
         }
         else {
             break;
@@ -705,15 +774,16 @@ float verificaFloat(){ // verifica se um número é float
         if(cin.fail()){ // verifica se houve algum erro no cin. exemplo: inserir um 'a' no lugar de um número
             cout << "Opcao invalida! Por favor, insira uma opcao certa" << endl
             << ">> ";
-            cin.clear();
+            cin.clear(); // limpa o buffer
             cin.sync();
-            continue;
+            continue; // continua o programa
+
         }else if(ch != '\n' && ch != ' '){ // verifica se há algum caracter junto ao numero, tornando-o inválido. exemplo: 12.54asd
             cout << "Opcao invalida! Por favor, insira uma opcao certa" << endl
             << ">> ";
-            cin.clear();
+            cin.clear(); // limpa o buffer
             cin.sync();
-            continue;
+            continue; // continua o programa
         }
         else
             break;

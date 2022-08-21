@@ -1,6 +1,6 @@
 #include "reserva.h" //include do arquivo 'reserva.h'
 
-//definição do constructor
+//  Constructor
 Reserva::Reserva(int nm_acmp, int nm_quarto, int dias, string nome, string tipo_quarto)
 {
     this->nm_acmp = nm_acmp;
@@ -9,12 +9,11 @@ Reserva::Reserva(int nm_acmp, int nm_quarto, int dias, string nome, string tipo_
     this->tipo_quarto = tipo_quarto;
     this->dias = dias;
 
-    //incluir na main
-    //gera número aleatório para a reserva
+    // É gerado um número aleatório para a reserva na main
     this->nm_res = 0;
-    // this->nm_res = 66666 + (rand() % 6666) + (rand() % 6666);
 }
 
+//  Métodos set
 void Reserva::set_montante(float montante)
 {
     this->montante = montante;
@@ -25,8 +24,7 @@ void Reserva::set_nmReserva(int& nm_res)
     this->nm_res = nm_res;
 }
 
-//definição dos métodos gets
-
+//  Métodos get
 float Reserva::getmontante() const
 {
     return montante;

@@ -1,21 +1,24 @@
 #ifndef QuartoPcD_H
 #define QuartoPcD_H
 
-//Quarto vai ser incluido na main
-//supondo que using namespace std;
-
+// Quarto para pessoas com deficiência (herda Quarto Padrão)
 class QuartoPcD : public Quarto
 {
-// atributos privados
+
+// Atributos Privados
 private:
     string tipoAdaptacao;
-    int servicoEspecial;
+    int servicoEspecial; // Número de funcionários que auxiliam o cliente com ajuda especializada 
+
 public:
-// constructor
+// Construtor
     QuartoPcD(int, int, int, float, int, string, int);
+
+//  Métodos set
     void setTipoAdaptacao(string);
     void setServicoEspecial(int);
-//  métodos gets
+
+//  Métodos get
     string getTipoAdaptacao() const;
     int getServ() const;
 

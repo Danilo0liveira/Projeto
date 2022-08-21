@@ -1,5 +1,6 @@
 #include "quartopremium.h" //include do headerfile
 
+// Construtor
 QuartoPremium::QuartoPremium(int andar, int camas, int capacidade, float diaria, int numero) : Quarto(andar, camas, capacidade , diaria, numero)
 {
     this -> wifi = 0;
@@ -9,7 +10,7 @@ QuartoPremium::QuartoPremium(int andar, int camas, int capacidade, float diaria,
     this -> servquart = 0;
 }
 
-//métodos sets
+//  Métodos set
 void QuartoPremium::setWifi(const int& wifi)
 {
     this->wifi = wifi;
@@ -35,7 +36,7 @@ void QuartoPremium::setServico(const int& servquart)
     this->servquart = servquart;
 }
 
-//definição dos métodos do get
+//  Métodos get
 int QuartoPremium::getWifi() const
 {
     return wifi;
