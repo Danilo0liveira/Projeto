@@ -686,9 +686,9 @@ void menuinicial(Hotel& hotel) // Função que printa o menu inicial do Hotel
 
     cout << setprecision(2);
     (strstream.str().size() > 10) ?
-    cout << setfill(' ') << setw(6) << " " << "Avaliação: " << strstream.str() << endl
+    cout << setfill(' ') << setw(8) << " " << "Avaliação: " << strstream.str() << endl
     :
-    cout << setfill(' ') << setw(12) << " " << "Avaliação:  " << strstream.str() << endl;
+    cout << setfill(' ') << setw(14) << " " << "Avaliação:  " << strstream.str() << endl;
     cout << setfill(' ') << setw(14) << " " << "Hóspedes:  " << hotel.getPessoas() << endl;
     cout << setfill('=') << setw(41) << "=" << endl;
 
