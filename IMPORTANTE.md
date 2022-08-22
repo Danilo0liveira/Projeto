@@ -1,2 +1,1 @@
-SO TEM GAY AQUI VEI
 
